@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.card-container');
 
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 18; i++) {
         const card = `
             <div class="card">
                 <img src="https://via.placeholder.com/150" alt="Comic ${i}">

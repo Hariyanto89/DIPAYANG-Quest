@@ -5,48 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Komik Website Clone</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .menu-card {
+            display: flex;
+            gap: 10px;
+        }
+
+        .menu-card .menu-item {
+            background-color: #ff6600;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9em;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-card .menu-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Card Grid Styles */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-bottom: 2px solid #ff6600;
+        }
+
+        .card h3 {
+            font-size: 1em;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .card .read-btn {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            background-color: #ff6600;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .card .read-btn:hover {
+            background-color: #e65500;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #222;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">KomikClone</div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Genres</a></li>
-                <li><a href="#">Popular</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="menu-card">
+            <a href="#" class="menu-item">Home</a>
+            <a href="#" class="menu-item">Genres</a>
+            <a href="#" class="menu-item">Popular</a>
+            <a href="#" class="menu-item">Contact</a>
+        </div>
     </header>
-    
-    <main>
-        <section class="hero">
-            <h1>Welcome to KomikClone</h1>
-            <p>Read your favorite comics online for free.</p>
-        </section>
 
-        <section class="comics">
-            <h2>Latest Comics</h2>
-            <div class="comic-grid">
-                <div class="comic">
-                    <img src="comic1.jpg" alt="Comic 1">
-                    <h3>Comic Title 1</h3>
-                    <a href="#" class="read-btn">Read Now</a>
-                </div>
-                <div class="comic">
-                    <img src="comic2.jpg" alt="Comic 2">
-                    <h3>Comic Title 2</h3>
-                    <a href="#" class="read-btn">Read Now</a>
-                </div>
-                <!-- Add more comics as needed -->
-            </div>
+    <main>
+        <section class="card-container">
+            <!-- Generate 20 cards -->
+            <script>
+                for (let i = 1; i <= 20; i++) {
+                    document.write(`
+                        <div class="card">
+                            <img src="https://via.placeholder.com/150" alt="Comic ${i}">
+                            <h3>Comic Title ${i}</h3>
+                            <a href="#" class="read-btn">Read Now</a>
+                        </div>
+                    `);
+                }
+            </script>
         </section>
     </main>
 
     <footer>
         <p>&copy; 2024 KomikClone. All rights reserved.</p>
     </footer>
-
-    <script src="scripts.js"></script>
 </body>
 </html>

@@ -31,4 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Add hover effects for comic items
+    const comicHoverItems = document.querySelectorAll('.comic');
+    comicHoverItems.forEach(comic => {
+        comic.addEventListener('mouseover', () => {
+            comic.style.transform = 'scale(1.05)';
+            comic.style.transition = 'transform 0.3s';
+        });
+        comic.addEventListener('mouseout', () => {
+            comic.style.transform = 'scale(1)';
+        });
+    });
 });

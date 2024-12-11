@@ -8,102 +8,80 @@ body {
 /* Header Styles */
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px;
     background-color: #222;
     color: #fff;
 }
 
-header .logo {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-header nav ul {
-    list-style: none;
+.menu-card {
     display: flex;
-    padding: 0;
-    margin: 0;
+    gap: 10px;
 }
 
-header nav ul li {
-    margin: 0 10px;
-}
-
-header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1em;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background 0.3s, color 0.3s;
-}
-
-header nav ul li a:hover {
+.menu-card .menu-item {
     background-color: #ff6600;
-    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9em;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-/* Main Comic Grid */
-.comic-container {
+.menu-card .menu-item:hover {
+    transform: scale(1.1);
+}
+
+/* Card Grid Styles */
+.card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
     padding: 20px;
-    background-color: #f4f4f4;
 }
 
-.comic-item {
-    background-color: #ffefc2;
-    border: 2px solid #e6b800;
-    border-radius: 8px;
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    position: relative;
+    text-align: center;
     transition: transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.comic-item:hover {
+.card:hover {
     transform: scale(1.05);
 }
 
-.comic-item img {
+.card img {
     width: 100%;
     height: auto;
+    border-bottom: 2px solid #ff6600;
 }
 
-.comic-item .info {
-    padding: 10px;
-    text-align: center;
-}
-
-.comic-item .info h3 {
+.card h3 {
+    font-size: 1em;
     margin: 10px 0;
-    font-size: 1.2em;
     color: #333;
 }
 
-.comic-item .info .badge {
+.card .read-btn {
     display: inline-block;
+    margin: 10px 0;
     padding: 5px 10px;
-    font-size: 0.8em;
-    font-weight: bold;
-    border-radius: 3px;
+    font-size: 0.9em;
     background-color: #ff6600;
     color: white;
-    margin-bottom: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
 }
 
-.comic-item .info .chapter {
-    font-size: 0.9em;
-    color: #555;
-}
-
-.comic-item .info .time {
-    font-size: 0.8em;
-    color: #888;
-    margin-top: 5px;
+.card .read-btn:hover {
+    background-color: #e65500;
 }
 
 /* Footer Styles */
@@ -112,15 +90,4 @@ footer {
     padding: 10px;
     background-color: #222;
     color: #fff;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .comic-container {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-
-    header nav ul li a {
-        font-size: 0.9em;
-    }
 }

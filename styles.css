@@ -74,12 +74,16 @@ header h1 {
 }
 
 .card h3 {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
     font-size: 1em;
     margin: 10px 0;
     color: #333;
 }
 
 .card .read-btn {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
     display: inline-block;
     margin: 10px 0;
     padding: 5px 10px;

@@ -109,3 +109,7 @@ footer {
     width: 100%;
     margin-top: 20px;
 }
+
+h1 {
+    animation: pulse-text 2s infinite;
+}

@@ -5,14 +5,18 @@ body {
     background-color: #f9f9f9;
 }
 
-/* Header Styles */
+/* Header */
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background-color: #222;
+    font-family: 'Orbitron', sans-serif;
+    background: #000080;
     color: #fff;
+    width: 100%;
+    padding: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .menu-card {

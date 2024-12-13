@@ -63,6 +63,8 @@ header h1 {
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s ease;
+    justify-content: center; /* Centering cards horizontally */
+    align-items: center; /* Optional: Centering cards vertically */
 }
 
 .card:hover {

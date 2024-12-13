@@ -19,6 +19,13 @@ header {
     z-index: 10;
 }
 
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .menu-card {
     display: flex;
     gap: 10px;

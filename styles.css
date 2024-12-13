@@ -110,6 +110,15 @@ footer {
     margin-top: 20px;
 }
 
+@keyframes pulse-text {
+    0%, 100% {
+        text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;
+    }
+    50% {
+        text-shadow: 0 0 20px #FFFFFF, 0 0 30px #FFFFFF;
+    }
+}
+
 h1 {
     animation: pulse-text 2s infinite;
 }

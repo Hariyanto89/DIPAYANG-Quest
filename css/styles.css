@@ -11,10 +11,9 @@ header {
     background: #000080;
     color: #fff;
     width: 100%;
-    padding: 15px 0;
+    padding: 10px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    position: sticky;
     top: 0;
     z-index: 10;
 }

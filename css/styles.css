@@ -155,6 +155,40 @@ main {
     display: inline-block;
 }
 
+.player-status p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.badges, .certificates {
+    margin-top: 1rem;
+}
+
+.badges h3, .certificates h3 {
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+#badges-list, #certificates-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badge, .certificate {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 2px solid #ff6600;
+    transition: transform 0.3s ease;
+}
+
+.badge:hover, .certificate:hover {
+    transform: scale(1.1);
+}
+
 /* Menambahkan beberapa gaya global */
 body {
     margin: 0;

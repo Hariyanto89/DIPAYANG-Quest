@@ -116,6 +116,35 @@ main {
     transform: scale(1.05);
 }
 
+/* Tombol navigasi */
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: #e65500;
+    transform: scale(1.1);
+}
+
+.nav-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 /* Bagian untuk status pemain (1/3 dari layar) */
 /* Player Status Styles */
 .player-status {

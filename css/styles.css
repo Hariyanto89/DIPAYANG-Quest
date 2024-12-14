@@ -61,11 +61,12 @@ main {
     background-color: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 8px;
-    overflow-y: auto;
     padding: 1rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr); /* Menampilkan 4 kolom kartu */
+    gap: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 
 .card {
@@ -301,19 +302,45 @@ footer {
     cursor: not-allowed;
 }
 
+/* Tombol navigasi */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.pagination-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsif untuk perangkat lebih kecil */
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom di perangkat kecil */
+    }
+
+    .pagination-btn {
+        font-size: 14px;
+    }
+}
+
 /* Responsif untuk perangkat kecil (ponsel dan tablet) */
 @media (max-width: 768px) {
     #prev-btn, #next-btn {
         font-size: 14px;
         padding: 8px 16px;
-    }
-}
-
-/* Responsif untuk desktop (lebih besar dari 768px) */
-@media (min-width: 768px) {
-    #prev-btn, #next-btn {
-        font-size: 18px;
-        padding: 12px 24px;
     }
 }
 

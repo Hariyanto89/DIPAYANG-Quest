@@ -1,3 +1,24 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAw6mmGUrDyFiVoRdejZZJ7U_Cp7Od-8aI",
+  authDomain: "dipayang-quest.firebaseapp.com",
+  projectId: "dipayang-quest",
+  storageBucket: "dipayang-quest.firebasestorage.app",
+  messagingSenderId: "769511051480",
+  appId: "1:769511051480:web:76606871be7200ce3047ad",
+  measurementId: "G-BEP9KDRTCG"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.card-container');
     const prevBtn = document.getElementById('prev-btn');

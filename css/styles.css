@@ -177,8 +177,15 @@ h1 {
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+    main {
+        flex-direction: column; /* Stack vertically on small screens */
+        height: auto; /* Sesuaikan tinggi konten */
+    }
+    
     .card-container {
+        overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.8rem;
     }
 
     .card img {

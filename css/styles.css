@@ -264,6 +264,10 @@ h1 {
     animation: pulse-text 2s infinite;
 }
 
+h2 {
+    animation: pulse-text 2s infinite;
+}
+
 /* Responsiveness */
 @media (max-width: 768px) {
     main {

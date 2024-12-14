@@ -54,17 +54,16 @@ main {
 }
 
 /* Card Grid Styles */
-/* Bagian untuk kontainer kartu (2/3 dari layar) */
 .card-container {
     flex: 2;
     background-color: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 8px;
-    overflow-y: auto; /* Scroll jika konten terlalu banyak */
+    overflow-y: auto;
     padding: 1rem;
-    display: grid; /* Gunakan grid untuk tata letak */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsif */
-    gap: 1rem; /* Jarak antar card */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
 .card {
@@ -73,12 +72,10 @@ main {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 10px; /* Tetap gunakan padding */
-    max-height: 350px; /* Batasi tinggi card */
-    display: flex; /* Gunakan flexbox */
-    flex-direction: column; /* Atur agar isi vertikal */
-    justify-content: space-between; /* Spasi antar elemen */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card:hover {
@@ -88,13 +85,12 @@ main {
 
 .card img {
     width: 100%;
-    height: 180px; /* Sesuaikan tinggi gambar */
-    object-fit: cover; /* Potong gambar agar sesuai area */
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
 }
 
 .card h3 {
     font-family: 'Orbitron', sans-serif;
-    text-align: center;
     font-size: 1.2em;
     margin: 10px 0;
     color: #333;
@@ -102,10 +98,8 @@ main {
 
 .card .read-btn {
     font-family: 'Orbitron', sans-serif;
-    text-align: center;
-    display: inline-block;
-    margin-top: auto; /* Posisi tombol di bagian bawah */
-    padding: 8px 15px; /* Ukuran tombol */
+    margin-top: auto;
+    padding: 8px 15px;
     font-size: 0.9em;
     background-color: #ff6600;
     color: white;
@@ -162,40 +156,18 @@ h1 {
     animation: pulse-text 2s infinite;
 }
 
-/* Responsivitas Mobile */
+/* Responsiveness */
 @media (max-width: 768px) {
     .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ukuran card lebih besar */
-        gap: 0.8rem; /* Jarak antar card sedikit dikurangi */
-    }
-
-    .card {
-        padding: 8px; /* Kurangi padding */
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.8rem;
     }
 
     .card img {
-        height: 140px; /* Gambar lebih kecil tapi tetap terlihat */
-    }
-}
-
-/* Responsivitas Tablet */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Card lebih besar untuk tablet */
+        aspect-ratio: 4 / 3;
     }
 
-    .card img {
-        height: 160px; /* Sesuaikan tinggi gambar */
-    }
-}
-
-/* Responsivitas Desktop */
-@media (min-width: 1025px) {
-    .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Card lebih besar */
-    }
-
-    .card img {
-        height: 180px; /* Gambar tetap proporsional */
+    .card:hover {
+        transform: scale(1.02);
     }
 }

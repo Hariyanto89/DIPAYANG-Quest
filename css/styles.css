@@ -102,8 +102,8 @@ main {
     font-family: 'Orbitron', sans-serif;
     text-align: center;
     display: inline-block;
-    margin: 10px 0;
-    padding: 5px 10px;
+    margin: 10px auto;
+    padding: 5px 15px;
     font-size: 0.8em;
     background-color: #ff6600;
     color: white;

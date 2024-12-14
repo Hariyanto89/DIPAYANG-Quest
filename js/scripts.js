@@ -1,4 +1,4 @@
-// script.js
+// scripts.js
 import { db } from './firebase.js'; // Mengimpor Firestore dari firebase.js
 import { collection, addDoc, getDocs } from "firebase/firestore"; // Mengimpor metode Firestore
 

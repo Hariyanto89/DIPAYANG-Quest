@@ -13,18 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Continue for up to 20 tasks
     ];
 
-    cardData.forEach(data => {
-        const card = `
-            <div class="card">
-                <img src="${data.img}" alt="Badge" style="width: 100%; height: 180px; object-fit: cover;">
-                <h3>${data.title}</h3>
-                <a href="#" class="read-btn">Pelajari</a>
-            </div>
-        `;
-        container.innerHTML += card;
-    });
-});
-
     // Loop through the array to create the cards
     tasks.forEach((task, index) => {
         const card = `

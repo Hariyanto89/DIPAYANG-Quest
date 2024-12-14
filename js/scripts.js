@@ -1,3 +1,5 @@
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAw6mmGUrDyFiVoRdejZZJ7U_Cp7Od-8aI",

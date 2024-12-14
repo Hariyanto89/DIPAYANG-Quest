@@ -306,17 +306,17 @@ footer {
 .pagination-controls {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .pagination-btn {
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 2px;
+    font-size: 20px;
     transition: background-color 0.3s ease;
 }
 

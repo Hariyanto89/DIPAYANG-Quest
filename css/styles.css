@@ -159,3 +159,17 @@ footer {
 h1 {
     animation: pulse-text 2s infinite;
 }
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Card lebih kecil */
+    }
+
+    .card {
+        padding: 5px; /* Kurangi padding untuk layar kecil */
+    }
+
+    .card img {
+        height: 100px; /* Gambar lebih kecil */
+    }
+}

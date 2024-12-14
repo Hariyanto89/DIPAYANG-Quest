@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
         // Continue for up to 20 tasks
     ];
+
     cardData.forEach(data => {
         const card = `
             <div class="card">
@@ -24,3 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+    // Loop through the array to create the cards
+    tasks.forEach((task, index) => {
+        const card = `
+            <div class="card">
+                <img src="${task.img}" alt="Badge ${index + 1}">
+                <h3>${task.title}</h3>
+                <a href="#" class="read-btn">Pelajari</a>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+});

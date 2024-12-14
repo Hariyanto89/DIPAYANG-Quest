@@ -45,10 +45,12 @@ header h1 {
 }
 
 /* Mengatur tampilan utama (main) sebagai Flexbox */
+/* Layout utama */
 main {
     display: flex;
-    height: 100vh; /* Gunakan seluruh tinggi layar */
-    gap: 1rem; /* Jarak antar elemen */
+    flex-direction: row; /* Default: horizontal */
+    height: 100vh;
+    gap: 1rem;
     padding: 1rem;
     box-sizing: border-box;
 }
@@ -160,9 +162,11 @@ h1 {
 @media (max-width: 768px) {
     main {
         flex-direction: column; /* Stack vertically on small screens */
+        height: auto; /* Sesuaikan tinggi konten */
     }
 
     .card-container {
+        overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller cards */
         gap: 0.8rem;
     }

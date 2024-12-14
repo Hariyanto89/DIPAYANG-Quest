@@ -4,7 +4,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script src="js/firebase.js"></script> <!-- Mengimpor file firebase.js -->
-    <script src="js/scripts.js"></script> <!-- Mengimpor file script.js -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIPAYANG Quest</title>
@@ -21,19 +20,17 @@
             <a href="#" class="menu-item">💰</a>
             <a href="#" class="menu-item">📰</a>
             <a href="#" class="menu-item">🌏</a>
-            </div>
+        </div>
     </header>
 
     <main>
         <section class="card-container">
-            <!-- Generate 16 cards -->
-            <script src="js/scripts.js"></script>
+            <!-- Konten kartu akan ditambahkan secara dinamis di sini -->
         </section>
-            <div class="pagination-controls">
-                <button id="prev-btn" class="pagination-btn">⬅️</button>
-                <button id="next-btn" class="pagination-btn">➡️</button>
-            </div>
-         <script type="module" src="js/scripts.js"></script> 
+        <div class="pagination-controls">
+            <button id="prev-btn" class="pagination-btn">⬅️</button>
+            <button id="next-btn" class="pagination-btn">➡️</button>
+        </div>
         <aside class="player-status">
             <h2>QUEST PEMAIN</h2>
             <div class="status-item">
@@ -101,5 +98,6 @@
     <footer>
         <p>&copy; 2024 DIPAYANG Quest. - Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
     </footer>
+        <script type="module" src="js/scripts.js"></script> <!-- Memanggil file scripts.js setelah konten dimuat -->
 </body>
 </html>

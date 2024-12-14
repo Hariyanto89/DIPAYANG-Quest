@@ -86,9 +86,10 @@ main {
 }
 
 .card img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
+    width: 100%; /* Lebar gambar mengikuti lebar card */
+    height: 180px; /* Atur tinggi gambar tetap konsisten */
+    object-fit: cover; /* Agar gambar ter-crop dengan baik dan memenuhi area */
+    border-radius: 8px; /* Border radius untuk menyesuaikan dengan card */
 }
 
 .card h3 {

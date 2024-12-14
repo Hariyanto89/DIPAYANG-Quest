@@ -116,13 +116,43 @@ main {
 }
 
 /* Bagian untuk status pemain (1/3 dari layar) */
+/* Player Status Styles */
 .player-status {
-    flex: 1; /* Mengambil 1/3 ruang */
+    flex: 1;
     background-color: #fffbe6;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Orbitron', sans-serif;
+    text-align: left;
+    color: #333;
+}
+
+.player-status h2 {
+    font-size: 1.5em;
+    color: #191970;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.status-item {
+    margin-bottom: 1rem;
+}
+
+.status-label {
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.status-value {
+    font-size: 1.2em;
+    color: #333;
+    margin-left: 10px;
+}
+
+.status-item span {
+    display: inline-block;
 }
 
 /* Menambahkan beberapa gaya global */
@@ -174,6 +204,18 @@ h1 {
     .card img {
         height: 140px; /* Adjust image height for small screens */
     }
+
+   .player-status {
+        padding: 1rem;
+    }
+
+    .status-item {
+        margin-bottom: 0.8rem;
+    }
+
+    .status-value {
+        font-size: 1em;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -190,5 +232,17 @@ h1 {
 
     .card img {
         height: 160px;
+    }
+
+    .player-status {
+        padding: 1rem;
+    }
+
+    .status-item {
+        margin-bottom: 0.8rem;
+    }
+
+    .status-value {
+        font-size: 1em;
     }
 }

@@ -1,8 +1,8 @@
-// Import the necessary Firebase SDK modules
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+// firebase.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// Firebase configuration object
+// Konfigurasi Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAw6mmGUrDyFiVoRdejZZJ7U_Cp7Od-8aI",
   authDomain: "dipayang-quest.firebaseapp.com",
@@ -13,11 +13,11 @@ const firebaseConfig = {
   measurementId: "G-BEP9KDRTCG"
 };
 
-// Initialize Firebase
+// Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore
+// Inisialisasi Firestore
 const db = getFirestore(app);
 
-// Export the Firestore instance to be used in other files
+// Mengekspor Firestore untuk digunakan di file lain
 export { db };

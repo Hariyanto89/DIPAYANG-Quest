@@ -284,6 +284,39 @@ footer {
     animation: pulse-text 2s infinite;
 }
 
+/* Gaya umum untuk tombol */
+#prev-btn, #next-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#prev-btn:disabled, #next-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsif untuk perangkat kecil (ponsel dan tablet) */
+@media (max-width: 768px) {
+    #prev-btn, #next-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* Responsif untuk desktop (lebih besar dari 768px) */
+@media (min-width: 768px) {
+    #prev-btn, #next-btn {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+}
+
 @keyframes pulse-text {
     0%, 100% {
         text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;

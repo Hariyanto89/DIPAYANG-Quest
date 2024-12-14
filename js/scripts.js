@@ -25,6 +25,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('next-btn');
     const cardsPerPage = 16;
     let currentPage = 0;
+  
+const addTask = async (task) => {
+  try {
+    await db.collection("tasks").add({
+      title: task.title,
+      img: task.img,
+    });
+    console.log("Tugas berhasil ditambahkan!");
+  } catch (error) {
+    console.error("Terjadi kesalahan saat menambahkan tugas:", error);
+  }
+};
+
+const getTasks = async () => {
+  try {
+    const snapshot = await db.collection("tasks").get();
+    snapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mengambil data:", error);
+  }
+};
 
     const tasks = [
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },

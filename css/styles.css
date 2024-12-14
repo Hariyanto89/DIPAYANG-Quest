@@ -88,7 +88,7 @@ main {
 
 .card img {
     width: 100%; /* Lebar gambar mengikuti lebar card */
-    height: 120px; /* Atur tinggi gambar tetap konsisten */
+    height: 100px; /* Atur tinggi gambar tetap konsisten */
     object-fit: cover; /* Agar gambar ter-crop dengan baik dan memenuhi area */
     border-radius: 8px; /* Border radius untuk menyesuaikan dengan card */
 }
@@ -107,7 +107,7 @@ main {
     font-size: 0.9em;
     background-color: #ff6600;
     color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none;
     transition: background 0.3s, transform 0.3s;
 }

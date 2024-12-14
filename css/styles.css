@@ -163,6 +163,9 @@ main {
 
 .badges, .certificates, .game-history {
     margin-top: 1rem;
+    max-height: 250px; /* Batas tinggi untuk konten */
+    overflow-y: auto; /* Membuat scroll vertikal jika konten melebihi max-height */
+    padding-right: 15px; /* Memberikan ruang agar scroll tidak tertutup konten */
 }
 
 .badges h3, .certificates h3, .game-history h3 {

@@ -1,26 +1,25 @@
 // scripts.js
 import { db } from './firebase.js'; // Mengimpor Firestore dari firebase.js
-import { collection, addDoc, getDocs } from "firebase/firestore"; // Mengimpor metode Firestore
-
-// Fungsi untuk menambah data tugas ke Firestore
-const addTask = async (task) => {
-  try {
-    const docRef = await addDoc(collection(db, "tasks"), {
-      title: task.title,
-      img: task.img,
-    });
-    console.log("Tugas berhasil ditambahkan dengan ID:", docRef.id);
-  } catch (error) {
-    console.error("Terjadi kesalahan saat menambahkan tugas:", error);
-  }
-};
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Mengimpor metode Firestore
 
 // Fungsi untuk mengambil data tugas dari Firestore
 const getTasks = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "tasks"));
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
+      const taskData = doc.data();
+      console.log(doc.id, " => ", taskData);
+
+      // Menambahkan tugas ke card-container
+      const cardContainer = document.querySelector('.card-container');
+      const card = `
+        <div class="card">
+          <img src="${taskData.img}" alt="Badge">
+          <h3>${taskData.title}</h3>
+          <a href="#" class="read-btn">Pelajari</a>
+        </div>
+      `;
+      cardContainer.innerHTML += card;
     });
   } catch (error) {
     console.error("Terjadi kesalahan saat mengambil data:", error);

@@ -26,7 +26,7 @@ const getTasks = async () => {
 // Inisialisasi data tugas contoh (hanya digunakan untuk pengisian awal)
 const sampleTasks = [
         { img: "assets/icon/gamechapter1.jpg", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
+        { img: "assets/icon/gamechapter1.jpg", title: "Gelombang Aset Tani" },
         { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
         { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
         { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },

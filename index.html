@@ -1,103 +1,106 @@
 <!DOCTYPE html>
-<html lang="in">
+<html lang="id">
 <head>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="js/firebase.js"></script> <!-- Mengimpor file firebase.js -->
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DIPAYANG Quest adalah permainan e-Learning dalam berbagai hal.">
     <title>DIPAYANG Quest</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="js/firebase.js"></script> <!-- Konfigurasi Firebase -->
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
 </head>
 <body>
     <header>
-        <h1>DIPAYANG QUEST 1.1</h1>
-        <div class="menu-card">
-            <a href="#" class="menu-item">🏡</a>
-            <a href="#" class="menu-item">📊</a>
-            <a href="#" class="menu-item">📲</a>
-            <a href="#" class="menu-item">💰</a>
-            <a href="#" class="menu-item">📰</a>
-            <a href="#" class="menu-item">🌏</a>
-        </div>
+        <h1>DIPAYANG QUEST</h1>
+        <nav class="menu-card">
+            <a href="#" class="menu-item" aria-label="Beranda">🏡</a>
+            <a href="#" class="menu-item" aria-label="Leaderboard">📊</a>
+            <a href="#" class="menu-item" aria-label="Profil">📲</a>
+            <a href="#" class="menu-item" aria-label="Toko">💰</a>
+            <a href="#" class="menu-item" aria-label="Berita">📰</a>
+            <a href="#" class="menu-item" aria-label="Komunitas">🌏</a>
+        </nav>
     </header>
 
     <main>
-        <section class="card-container">
-            <!-- Konten kartu akan ditambahkan secara dinamis di sini -->
+        <!-- Section Konten Dinamis -->
+        <section class="card-container" id="card-container">
+            <!-- Kartu konten akan ditambahkan secara dinamis menggunakan Firebase -->
         </section>
+
+        <!-- Navigasi Paginasi -->
         <div class="pagination-controls">
             <button id="prev-btn" class="pagination-btn">⬅️</button>
             <button id="next-btn" class="pagination-btn">➡️</button>
         </div>
+
+        <!-- Status Pemain -->
         <aside class="player-status">
-            <h2>QUEST PEMAIN</h2>
+            <h2>STATUS PEMAIN</h2>
             <div class="status-item">
                 <span class="status-label">ID Pemain:</span>
-                <span class="status-value" id="level">2ox134</span> <!-- Named Player -->
+                <span class="status-value" id="player-id">-</span>
             </div>
             <div class="status-item">
                 <span class="status-label">Nama Pemain:</span>
-                <span class="status-value" id="level">Febri Ayank Rori</span> <!-- Named Player -->
+                <span class="status-value" id="player-name">-</span>
             </div>
             <div class="status-item">
                 <span class="status-label">Level:</span>
-                <span class="status-value" id="level">10</span> <!-- Level based on experience -->
+                <span class="status-value" id="player-level">-</span>
             </div>
             <div class="status-item">
                 <span class="status-label">XP:</span>
-                <span class="status-value" id="xp">450/1000</span> <!-- XP progress -->
+                <span class="status-value" id="player-xp">0/1000</span>
             </div>
             <div class="status-item">
                 <span class="status-label">DIPAYANG Tokens:</span>
-                <span class="status-value" id="tokens">5</span> <!-- Tokens earned -->
+                <span class="status-value" id="player-tokens">0</span>
             </div>
             <div class="status-item">
                 <span class="status-label">Nyawa:</span>
-                <span class="status-value" id="lives">❤️❤️❤️</span> <!-- Life hearts -->
+                <span class="status-value" id="player-lives">❤️❤️❤️</span>
             </div>
-            <!-- Badges Section -->
+            
+            <!-- Badges -->
             <div class="badges">
                 <h3>Badges</h3>
                 <div id="badges-list">
-                    <img src="assets/badges/merigi_badge.png" alt="Badge 1" class="badge">
-                    <img src="assets/badges/badge2.png" alt="Badge 2" class="badge">
-                    <!-- Additional badges can be added dynamically -->
+                    <!-- Badges akan ditambahkan dinamis -->
                 </div>
             </div>
-        
-            <!-- Certificates Section -->
+
+            <!-- Sertifikat -->
             <div class="certificates">
                 <h3>Sertifikat</h3>
                 <div id="certificates-list">
-                    <img src="assets/certificates/certificate1.png" alt="Certificate 1" class="certificate">
-                    <img src="assets/certificates/certificate2.png" alt="Certificate 2" class="certificate">
-                    <!-- Additional certificates can be added dynamically -->
+                    <!-- Sertifikat akan ditambahkan dinamis -->
                 </div>
             </div>
-          <!-- Game History Section -->
+
+            <!-- History Permainan -->
             <div class="game-history">
                 <h3>History Permainan</h3>
-                <div class="history-timeline">
-                    <!-- Game events will be listed here -->
-                    <div class="history-item completed">
-                        <span class="date">2024-12-10</span>
-                        <p>Completed Game 1: "Quiz Challenge" - 100 XP earned</p>
-                    </div>
-                    <div class="history-item ongoing">
-                        <span class="date">2024-12-14</span>
-                        <p>Ongoing Game 2: "Trivia Quiz" - 50 XP earned</p>
-                    </div>
-                    <!-- More history items can be added dynamically -->
+                <div class="history-timeline" id="game-history">
+                    <!-- History akan ditambahkan dinamis -->
                 </div>
             </div>
         </aside>
     </main>
 
     <footer>
-        <p>&copy; 2024 DIPAYANG Quest. - Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
+        <p>&copy; 2024 DIPAYANG Quest. Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
     </footer>
-        <script type="module" src="js/scripts.js"></script> <!-- Memanggil file scripts.js setelah konten dimuat -->
+
+    <!-- Skrip JavaScript -->
+    <script type="module" src="js/scripts.js"></script>
 </body>
 </html>

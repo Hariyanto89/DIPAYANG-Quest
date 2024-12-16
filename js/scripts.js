@@ -1,32 +1,29 @@
 // scripts.js
 import { db } from './firebase.js'; // Mengimpor Firestore dari firebase.js
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Mengimpor metode Firestore
+import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+
+// Fungsi untuk menambah tugas ke Firestore
+const addTask = async (task) => {
+  try {
+    await addDoc(collection(db, "tasks"), task);
+    console.log(`Tugas "${task.title}" berhasil ditambahkan.`);
+  } catch (error) {
+    console.error("Gagal menambahkan tugas:", error);
+  }
+};
 
 // Fungsi untuk mengambil data tugas dari Firestore
 const getTasks = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "tasks"));
-    querySnapshot.forEach((doc) => {
-      const taskData = doc.data();
-      console.log(doc.id, " => ", taskData);
-
-      // Menambahkan tugas ke card-container
-      const cardContainer = document.querySelector('.card-container');
-      const card = `
-        <div class="card">
-          <img src="${taskData.img}" alt="Badge">
-          <h3>${taskData.title}</h3>
-          <a href="#" class="read-btn">Pelajari</a>
-        </div>
-      `;
-      cardContainer.innerHTML += card;
-    });
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error("Terjadi kesalahan saat mengambil data:", error);
+    return [];
   }
 };
 
-// Menambah beberapa tugas ke Firestore sebagai contoh
+// Inisialisasi data tugas contoh
 const tasks = [
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
         { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
@@ -59,49 +56,47 @@ const tasks = [
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" }
-    ];
-// Menambah tugas-tugas tersebut ke Firestore
-tasks.forEach(task => {
-  addTask(task);
-});
+        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
+];
 
-// Event untuk mengambil dan menampilkan tugas setelah DOM selesai dimuat
-document.addEventListener('DOMContentLoaded', () => {
+// Menambah tugas-tugas contoh ke Firestore (Hanya untuk pertama kali)
+// tasks.forEach(addTask); // Uncomment jika ingin menambahkan data contoh
+
+// Event DOMContentLoaded
+document.addEventListener('DOMContentLoaded', async () => {
   const container = document.querySelector('.card-container');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
-  const cardsPerPage = 16;
+  const cardsPerPage = 8;
   let currentPage = 0;
 
+  // Data tugas di Firestore
+  const allTasks = await getTasks();
+
   // Fungsi untuk render kartu tugas
-  function renderCards() {
-    container.innerHTML = ''; // Menghapus kartu yang sudah ada
+  const renderCards = () => {
+    container.innerHTML = ''; // Bersihkan kartu sebelumnya
     const start = currentPage * cardsPerPage;
     const end = start + cardsPerPage;
+    const visibleTasks = allTasks.slice(start, end);
 
-    getTasks(); // Mengambil data tugas dari Firestore
-
-    // Loop untuk membuat kartu dari data tugas
-    tasks.slice(start, end).forEach((task, index) => {
-      const card = `
-        <div class="card">
-          <img src="${task.img}" alt="Badge ${index + 1}">
-          <h3>${task.title}</h3>
-          <a href="#" class="read-btn">Pelajari</a>
-        </div>
+    visibleTasks.forEach((task) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${task.img}" alt="Badge">
+        <h3>${task.title}</h3>
+        <a href="#" class="read-btn">Pelajari</a>
       `;
-      container.innerHTML += card;
+      container.appendChild(card);
     });
 
-    // Menonaktifkan tombol prev jika sudah di halaman pertama
+    // Update tombol pagination
     prevBtn.disabled = currentPage === 0;
+    nextBtn.disabled = currentPage >= Math.floor(allTasks.length / cardsPerPage);
+  };
 
-    // Menonaktifkan tombol next jika sudah di halaman terakhir
-    nextBtn.disabled = currentPage >= Math.floor(tasks.length / cardsPerPage);
-  }
-
-  // Event listener untuk tombol prev dan next
+  // Event tombol prev
   prevBtn.addEventListener('click', () => {
     if (currentPage > 0) {
       currentPage--;
@@ -109,8 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Event tombol next
   nextBtn.addEventListener('click', () => {
-    if (currentPage < Math.floor(tasks.length / cardsPerPage)) {
+    if (currentPage < Math.floor(allTasks.length / cardsPerPage)) {
       currentPage++;
       renderCards();
     }
@@ -118,48 +114,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render awal
   renderCards();
-});
-
-    function renderCards() {
-        // Clear the current cards
-        container.innerHTML = '';
-        const start = currentPage * cardsPerPage;
-        const end = start + cardsPerPage;
-        const visibleTasks = tasks.slice(start, end);
-
-        // Loop through the visible tasks to create cards
-        visibleTasks.forEach((task, index) => {
-            const card = `
-                <div class="card">
-                    <img src="${task.img}" alt="Badge ${index + 1}">
-                    <h3>${task.title}</h3>
-                    <a href="#" class="read-btn">Pelajari</a>
-                </div>
-            `;
-            container.innerHTML += card;
-        });
-
-        // Disable prev button if on the first page
-        prevBtn.disabled = currentPage === 0;
-
-        // Disable next button if on the last page
-        nextBtn.disabled = currentPage >= Math.floor(tasks.length / cardsPerPage);
-    }
-
-    prevBtn.addEventListener('click', () => {
-        if (currentPage > 0) {
-            currentPage--;
-            renderCards();
-        }
-    });
-
-    nextBtn.addEventListener('click', () => {
-        if (currentPage < Math.floor(tasks.length / cardsPerPage)) {
-            currentPage++;
-            renderCards();
-        }
-    });
-
-    // Initial render
-    renderCards();
 });

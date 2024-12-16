@@ -27,7 +27,7 @@ const getTasks = async () => {
 const sampleTasks = [
         { img: "assets/icon/gamechapter1.jpg", title: "Petani Aseters" },
         { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
+        { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani" },
         { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
         { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
         { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },

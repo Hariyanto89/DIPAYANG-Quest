@@ -1,12 +1,12 @@
-// scripts.js
-import { db } from './firebase.js'; // Mengimpor Firestore dari firebase.js
+// Import Firestore dari firebase.js
+import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
 
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {
   try {
     await addDoc(collection(db, "tasks"), task);
-    console.log(`Tugas "${task.title}" berhasil ditambahkan.`);
+    console.log(`Tugas \"${task.title}\" berhasil ditambahkan.`);
   } catch (error) {
     console.error("Gagal menambahkan tugas:", error);
   }
@@ -23,8 +23,8 @@ const getTasks = async () => {
   }
 };
 
-// Inisialisasi data tugas contoh
-const tasks = [
+// Inisialisasi data tugas contoh (hanya digunakan untuk pengisian awal)
+const sampleTasks = [
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
         { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
         { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
@@ -56,24 +56,24 @@ const tasks = [
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
+        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" }
 ];
 
-// Menambah tugas-tugas contoh ke Firestore (Hanya untuk pertama kali)
-// tasks.forEach(addTask); // Uncomment jika ingin menambahkan data contoh
+// Menambah data tugas contoh ke Firestore (Hanya jika belum ada data)
+// sampleTasks.forEach(addTask); // Uncomment baris ini jika ingin menambahkan data contoh
 
-// Event DOMContentLoaded
+// Event DOMContentLoaded untuk menjalankan kode setelah halaman dimuat
 document.addEventListener('DOMContentLoaded', async () => {
-  const container = document.querySelector('.card-container');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const cardsPerPage = 8;
-  let currentPage = 0;
+  const container = document.querySelector('.card-container'); // Kontainer untuk kartu tugas
+  const prevBtn = document.getElementById('prev-btn'); // Tombol untuk halaman sebelumnya
+  const nextBtn = document.getElementById('next-btn'); // Tombol untuk halaman berikutnya
+  const cardsPerPage = 8; // Jumlah kartu per halaman
+  let currentPage = 0; // Halaman saat ini dimulai dari 0
 
-  // Data tugas di Firestore
+  // Ambil data tugas dari Firestore
   const allTasks = await getTasks();
 
-  // Fungsi untuk render kartu tugas
+  // Fungsi untuk merender kartu tugas
   const renderCards = () => {
     container.innerHTML = ''; // Bersihkan kartu sebelumnya
     const start = currentPage * cardsPerPage;
@@ -91,12 +91,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       container.appendChild(card);
     });
 
-    // Update tombol pagination
+    // Perbarui status tombol pagination
     prevBtn.disabled = currentPage === 0;
-    nextBtn.disabled = currentPage >= Math.floor(allTasks.length / cardsPerPage);
+    nextBtn.disabled = currentPage >= Math.ceil(allTasks.length / cardsPerPage) - 1;
   };
 
-  // Event tombol prev
+  // Event untuk tombol halaman sebelumnya
   prevBtn.addEventListener('click', () => {
     if (currentPage > 0) {
       currentPage--;
@@ -104,14 +104,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Event tombol next
+  // Event untuk tombol halaman berikutnya
   nextBtn.addEventListener('click', () => {
-    if (currentPage < Math.floor(allTasks.length / cardsPerPage)) {
+    if (currentPage < Math.ceil(allTasks.length / cardsPerPage) - 1) {
       currentPage++;
       renderCards();
     }
   });
 
-  // Render awal
+  // Render awal kartu tugas
   renderCards();
 });

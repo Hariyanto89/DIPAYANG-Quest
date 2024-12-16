@@ -89,9 +89,19 @@ main {
 
 .card img {
     width: 100%; /* Lebar gambar mengikuti lebar card */
-    height: 100px; /* Atur tinggi gambar tetap konsisten */
+    height: 50%; /* Atur tinggi gambar tetap konsisten */
     object-fit: cover; /* Agar gambar ter-crop dengan baik dan memenuhi area */
-    border-radius: 8px; /* Border radius untuk menyesuaikan dengan card */
+    border-radius: 8px 8px 0 0;
+}
+
+/* Gaya Konten Kartu (judul dan tombol) */
+.card-content {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .card h3 {

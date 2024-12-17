@@ -94,6 +94,22 @@ main {
     border-radius: 8px 8px 0 0;
 }
 
+.game-card {
+    width: 250px;
+    border: 1px solid #ddd; /* Konsisten dengan kartu lain */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* Gaya Konten Kartu (judul dan tombol) */
 .card-content {
     padding: 15px;

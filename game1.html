@@ -36,15 +36,31 @@
 
   <!-- Konten Game -->
   <main id="game1-container">
-    <h2>Game 1: Pembelajaran Aset</h2>
-    <p>Selamat datang di level 1. Jawab pertanyaan berikut untuk melanjutkan ke level berikutnya.</p>
-    <div class="game-level">
-      <h3>Pertanyaan 1</h3>
-      <p>Apa fungsi utama dari aset daerah?</p>
-      <button onclick="checkAnswer(true)">Jawaban 1: Untuk pelayanan publik</button>
-      <button onclick="checkAnswer(false)">Jawaban 2: Untuk disewakan ke pihak swasta</button>
+    <div class="progress-container">
+        <label>Level Progress</label>
+        <progress id="level-progress" value="10" max="100"></progress>
     </div>
 
+    <div class="game-content">
+        <div class="game-card">
+            <h3>Pertanyaan 1</h3>
+            <p>Apa fungsi utama dari aset daerah?</p>
+            
+            <div class="game-options">
+                <button class="option-btn" onclick="checkAnswer(true)">
+                    <span>✅</span> Untuk pelayanan publik
+                </button>
+                <button class="option-btn" onclick="checkAnswer(false)">
+                    <span>❌</span> Untuk disewakan ke pihak swasta
+                </button>
+            </div>
+        </div>
+
+        <!-- Feedback -->
+        <div id="feedback" class="feedback hidden">
+            <p id="feedback-text"></p>
+        </div>
+    </div>
 
         <!-- Status Pemain -->
         <aside class="player-status">

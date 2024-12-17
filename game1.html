@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game 1 - DIPAYANG Quest</title>
+  <link rel="stylesheet" href="css/game1.css">
+</head>
+<body>
+  <!-- Header -->
+  <div id="header-container"></div>
+
+  <!-- Konten Game -->
+  <main id="game1-container">
+    <h2>Game 1: Pembelajaran Aset</h2>
+    <p>Selamat datang di level 1. Jawab pertanyaan berikut untuk melanjutkan ke level berikutnya.</p>
+    <div class="game-level">
+      <h3>Pertanyaan 1</h3>
+      <p>Apa fungsi utama dari aset daerah?</p>
+      <button onclick="checkAnswer(true)">Jawaban 1: Untuk pelayanan publik</button>
+      <button onclick="checkAnswer(false)">Jawaban 2: Untuk disewakan ke pihak swasta</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <!-- Script -->
+  <script src="js/scripts.js"></script>
+  <script src="js/game1.js"></script>
+  <script>
+    // Load header dan footer dari shared folder
+    loadComponent("shared/header.html", "header-container");
+    loadComponent("shared/footer.html", "footer-container");
+  </script>
+</body>
+</html>

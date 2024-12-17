@@ -94,6 +94,94 @@ main {
     border-radius: 8px 8px 0 0;
 }
 
+/* Progress Bar */
+.progress-container {
+    text-align: center;
+    margin: 10px auto;
+}
+
+progress {
+    width: 80%;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #4caf50; /* Warna hijau */
+    border-radius: 10px;
+}
+
+/* Game Content */
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.game-card {
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.game-options {
+    margin-top: 20px;
+}
+
+.option-btn {
+    display: block;
+    background-color: #007BFF;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.option-btn:hover {
+    background-color: #0056b3;
+}
+
+.option-btn span {
+    margin-right: 10px;
+}
+
+/* Feedback */
+.feedback {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.feedback.hidden {
+    display: none;
+}
+
+.feedback.correct {
+    color: #28a745;
+}
+
+.feedback.incorrect {
+    color: #dc3545;
+}
+
 /* Gaya Konten Kartu (judul dan tombol) */
 .card-content {
     padding: 15px;

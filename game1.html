@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game 1 - DIPAYANG Quest</title>
-  <link rel="stylesheet" href="css/game1.css">
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DIPAYANG Quest adalah permainan e-Learning dalam berbagai hal.">
+    <title>DIPAYANG Quest</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="js/firebase.js"></script> <!-- Konfigurasi Firebase -->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+    <h1>Tata Aset Pertanian</h1>
+    <link rel="stylesheet" href="css/game1.css">  
 </head>
+<body>
+    <header>
+        <h1>DIPAYANG QUEST</h1>
+        <nav class="menu-card">
+            <a href="#" class="menu-item" aria-label="Beranda">🏡</a>
+            <a href="#" class="menu-item" aria-label="Leaderboard">📊</a>
+            <a href="#" class="menu-item" aria-label="Profil">📲</a>
+            <a href="#" class="menu-item" aria-label="Toko">💰</a>
+            <a href="#" class="menu-item" aria-label="Berita">📰</a>
+            <a href="#" class="menu-item" aria-label="Komunitas">🌏</a>
+        </nav>
+    </header>
+
+    <main>
 <body>
   <!-- Header -->
   <div id="header-container"></div>
@@ -20,7 +47,61 @@
       <button onclick="checkAnswer(true)">Jawaban 1: Untuk pelayanan publik</button>
       <button onclick="checkAnswer(false)">Jawaban 2: Untuk disewakan ke pihak swasta</button>
     </div>
-  </main>
+
+
+        <!-- Status Pemain -->
+        <aside class="player-status">
+            <h2>STATUS PEMAIN</h2>
+            <div class="status-item">
+                <span class="status-label">ID Pemain:</span>
+                <span class="status-value" id="player-id">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Nama Pemain:</span>
+                <span class="status-value" id="player-name">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Level:</span>
+                <span class="status-value" id="player-level">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">XP:</span>
+                <span class="status-value" id="player-xp">0/1000</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">DIPAYANG Tokens:</span>
+                <span class="status-value" id="player-tokens">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Nyawa:</span>
+                <span class="status-value" id="player-lives">❤️❤️❤️</span>
+            </div>
+            
+            <!-- Badges -->
+            <div class="badges">
+                <h3>Badges</h3>
+                <div id="badges-list">
+                    <!-- Badges akan ditambahkan dinamis -->
+                </div>
+            </div>
+
+            <!-- Sertifikat -->
+            <div class="certificates">
+                <h3>Sertifikat</h3>
+                <div id="certificates-list">
+                    <!-- Sertifikat akan ditambahkan dinamis -->
+                </div>
+            </div>
+
+            <!-- History Permainan -->
+            <div class="game-history">
+                <h3>History Permainan</h3>
+                <div class="history-timeline" id="game-history">
+                    <!-- History akan ditambahkan dinamis -->
+                </div>
+            </div>
+        </aside>
+ </main>
 
   <!-- Footer -->
   <div id="footer-container"></div>
@@ -33,5 +114,11 @@
     loadComponent("shared/header.html", "header-container");
     loadComponent("shared/footer.html", "footer-container");
   </script>
+    <footer>
+        <p>&copy; 2024 DIPAYANG Quest. Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
+    </footer>
+
+    <!-- Skrip JavaScript -->
+    <script type="module" src="js/scripts.js"></script>
 </body>
 </html>

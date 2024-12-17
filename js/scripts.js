@@ -64,9 +64,9 @@ const sampleTasks = [
 
 // Event DOMContentLoaded untuk menjalankan kode setelah halaman dimuat
 document.addEventListener('DOMContentLoaded', async () => {
-  const container = document.querySelector('.card-container'); // Kontainer untuk kartu tugas
-  const prevBtn = document.getElementById('prev-btn'); // Tombol untuk halaman sebelumnya
-  const nextBtn = document.getElementById('next-btn'); // Tombol untuk halaman berikutnya
+  const container = document.querySelector('.card-container'); // Kontainer kartu tugas
+  const prevBtn = document.getElementById('prev-btn'); // Tombol halaman sebelumnya
+  const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
   const cardsPerPage = 8; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
 
@@ -80,9 +80,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const end = start + cardsPerPage;
     const visibleTasks = allTasks.slice(start, end);
 
-    visibleTasks.forEach((task) => {
+    visibleTasks.forEach((task, index) => {
       const card = document.createElement('div');
-      card.className = 'card';
+      card.className = 'card game-card'; // Tambahkan class game-card untuk event click
+      card.dataset.game = index % 2 === 0 ? 'game1' : 'game2'; // Contoh data-game (game1/game2)
       card.innerHTML = `
         <img src="${task.img}" alt="Badge">
         <h3>${task.title}</h3>
@@ -94,6 +95,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Perbarui status tombol pagination
     prevBtn.disabled = currentPage === 0;
     nextBtn.disabled = currentPage >= Math.ceil(allTasks.length / cardsPerPage) - 1;
+
+    // Tambahkan event click untuk game-card
+    const gameCards = document.querySelectorAll('.game-card');
+    gameCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const game = card.dataset.game; // Ambil nilai data-game
+
+        // Redirect ke halaman sesuai dengan game
+        if (game === "game1") {
+          window.location.href = "game1.html";
+        } else if (game === "game2") {
+          window.location.href = "game2.html";
+        }
+      });
+    });
   };
 
   // Event untuk tombol halaman sebelumnya

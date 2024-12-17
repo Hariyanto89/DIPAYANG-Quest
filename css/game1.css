@@ -141,6 +141,14 @@ progress::-webkit-progress-value {
     margin-top: 20px;
 }
 
+.game-content {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.game-card {
+    margin-bottom: 20px;
+}
+
 .option-btn {
     display: block;
     background-color: #007BFF;

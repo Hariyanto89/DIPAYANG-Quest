@@ -31,12 +31,25 @@
     </header>
 
     <main>
-        <!-- Section Konten Dinamis -->
-        <section class="card-container" id="card-container">
- 
-         <div class="game-content">
-              <!-- Pertanyaan akan diisi secara dinamis -->
+        <section class="card-container" id="task-container">
+            <!-- Card untuk wacana -->
+            <div class="card">
+                <div class="card-header">Wacana</div>
+                <div class="card-body" id="task-content">
+                    <!-- Konten wacana akan diisi secara dinamis -->
+                </div>
             </div>
+        
+            <!-- Card untuk pertanyaan -->
+            <div class="card">
+                <div class="card-header">Pertanyaan</div>
+                <div class="card-body" id="questions-container">
+                    <!-- Pertanyaan akan diisi secara dinamis -->
+                </div>
+            </div>
+        
+            <!-- Tombol navigasi -->
+            <button id="next-task" class="hidden">Lanjut ke Task Berikutnya</button>
         </section>
 
         <!-- Feedback -->

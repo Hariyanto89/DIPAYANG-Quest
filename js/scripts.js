@@ -203,3 +203,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Render awal kartu tugas
   renderCards();
 });
+
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    console.log("Berhasil logout");
+  } catch (error) {
+    console.error("Gagal logout:", error);
+  }
+});

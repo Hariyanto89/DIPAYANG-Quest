@@ -30,3 +30,19 @@ const auth = getAuth(app);
 
 // Mengekspor modul Firebase agar bisa digunakan di file lain
 export { db, storage, auth };
+
+// Fungsi untuk mengambil semua pertanyaan dari Firestore
+export const fetchQuestions = async () => {
+  const querySnapshot = await getDocs(collection(db, "Questions"));
+  let questions = [];
+  querySnapshot.forEach((doc) => {
+    questions.push(doc.data());
+  });
+  return questions;
+};
+
+// Fungsi untuk memperbarui progress pemain
+export const updatePlayerProgress = async (userId, progress) => {
+  const userDocRef = doc(db, "Users", userId);
+  await updateDoc(userDocRef, progress);
+};

@@ -192,6 +192,16 @@ progress::-webkit-progress-value {
     color: #dc3545;
 }
 
+.hidden {
+  display: none;
+}
+.correct {
+  color: green;
+}
+.incorrect {
+  color: red;
+}
+
 /* Gaya Konten Kartu (judul dan tombol) */
 .card-content {
     padding: 15px;

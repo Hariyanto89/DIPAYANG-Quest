@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { loginWithEmailPassword } from './firebase.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAw6mmGUrDyFiVoRdejZZJ7U_Cp7Od-8aI",
@@ -25,6 +26,7 @@ export { db, storage, auth };
 let questions = [];
 let currentQuestionIndex = 0;
 let lives = 3;
+let playerId = null;
 
 import { db } from './firebase.js';
 import { collection, getDocs, addDoc, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
@@ -55,6 +57,21 @@ function updateProgress(value) {
   const progressBar = document.getElementById('level-progress');
   progressBar.value = value; // Update progress level
 }
+
+// Fungsi untuk login pemain
+const loginPlayer = async () => {
+  const email = "user@example.com";  // Contoh email
+  const password = "password123";    // Contoh password
+  
+  playerId = await loginWithEmailPassword(email, password);
+  
+  if (playerId) {
+    console.log("Pemain berhasil login dengan ID:", playerId);
+    startGame();  // Memulai game setelah login berhasil
+  } else {
+    console.log("Login gagal. Silakan coba lagi.");
+  }
+};
 
 // Contoh: update progress ke 30%
 updateProgress(30);
@@ -115,14 +132,25 @@ const fetchQuestions = async () => {
   return questions; // Kembalikan array pertanyaan
 };
 
+// Fungsi untuk memulai game
 const startGame = async () => {
-  const questions = await fetchQuestions(); // Ambil pertanyaan dari Firestore
+  if (!playerId) {
+    console.error("Pemain belum login!");
+    return;
+  }
+  
+  // Mengambil pertanyaan dari Firestore menggunakan playerId
+  questions = await fetchQuestions(); // Ambil pertanyaan dari Firestore
+  
   if (questions.length > 0) {
-    loadQuestion(currentQuestionIndex); // Mulai permainan jika ada pertanyaan
+    loadQuestion(currentQuestionIndex);  // Menampilkan pertanyaan pertama
   } else {
     console.error("Tidak ada pertanyaan yang ditemukan.");
   }
 };
+
+// Memulai permainan dengan login
+loginPlayer();
 
 const saveProgress = async (userId, progress) => {
   try {

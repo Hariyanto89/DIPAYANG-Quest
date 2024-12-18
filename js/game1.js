@@ -70,10 +70,10 @@ const fetchQuestions = async () => {
     querySnapshot.forEach((doc) => {
       questions.push({ id: doc.id, ...doc.data() });
     });
+    console.log("Questions:", questions);
   } catch (error) {
     console.error("Error fetching questions:", error);
   }
-  return questions;
 };
 
 fetchQuestions(Ywu9TdFNwiXqVg7H3l3g);

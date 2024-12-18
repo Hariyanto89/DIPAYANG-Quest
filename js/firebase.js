@@ -30,4 +30,3 @@ const auth = getAuth(app);
 
 // Mengekspor modul Firebase agar bisa digunakan di file lain
 export { db, storage, auth };
-f

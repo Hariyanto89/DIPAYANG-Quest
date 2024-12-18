@@ -1,6 +1,45 @@
 // Import Firestore dari firebase.js
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+// Fungsi untuk mendapatkan data tugas berdasarkan ID pemain
+const fetchPlayerTasks = async (playerId) => {
+  try {
+    const tasksRef = collection(db, "tasks");
+    const q = query(tasksRef, where("playerId", "==", playerId));
+    const querySnapshot = await getDocs(q);
+    const tasks = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    renderTasks(tasks); // Render tugas ke UI
+  } catch (error) {
+    console.error("Gagal mengambil tugas pemain:", error);
+  }
+};
+
+const auth = getAuth();
+
+// Fungsi untuk login pengguna
+const loginUser = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("Login berhasil:", userCredential.user);
+  } catch (error) {
+    console.error("Gagal login:", error.message);
+  }
+};
+
+// Mendengarkan status login
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("Pengguna masuk:", user.uid);
+    fetchPlayerTasks(user.uid); // Ambil tugas berdasarkan ID pengguna
+  } else {
+    console.log("Pengguna belum masuk.");
+    // Redirect ke halaman login jika diperlukan
+    window.location.href = "login.html";
+  }
+});
 
 // Fungsi untuk menambahkan atau memperbarui data pemain
 const addOrUpdatePlayer = async (player) => {
@@ -191,4 +230,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Render awal kartu tugas
   renderCards();
+});
+
+const renderTasks = (tasks) => {
+  const container = document.querySelector('.card-container');
+  container.innerHTML = ''; // Hapus konten sebelumnya
+
+  tasks.forEach((task) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${task.img}" alt="Task Image">
+      <h3>${task.title}</h3>
+      <a href="#" class="read-btn">Pelajari</a>
+    `;
+    container.appendChild(card);
+  });
+};
+
+document.getElementById('login-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  loginUser(email, password);
 });

@@ -62,21 +62,47 @@ function updateProgress(value) {
 // Contoh: update progress ke 30%
 updateProgress(30);
 
-// Data pertanyaan
+// Fungsi untuk mengambil data pertanyaan
 const fetchQuestions = async () => {
-  const questions = [];
-  try {
-    const querySnapshot = await getDocs(collection(db, "questions"));
-    querySnapshot.forEach((doc) => {
-      questions.push({ id: doc.id, ...doc.data() });
+  const questionsContainer = document.querySelector('.game-content');
+  const querySnapshot = await getDocs(collection(db, "questions"));
+  
+  querySnapshot.forEach((doc) => {
+    const questionData = doc.data();
+    const questionText = questionData.question;
+    const options = questionData.options;
+
+    // Buat elemen untuk pertanyaan dan opsi
+    const questionElement = document.createElement('div');
+    questionElement.classList.add('question-item');
+
+    // Tambahkan pertanyaan
+    const questionTitle = document.createElement('h3');
+    questionTitle.textContent = questionText;
+    questionElement.appendChild(questionTitle);
+
+    // Tambahkan opsi
+    const optionsList = document.createElement('ul');
+    options.forEach(option => {
+      const optionItem = document.createElement('li');
+      optionItem.textContent = option.text;
+      optionItem.addEventListener('click', () => {
+        if (option.correct) {
+          alert('Jawaban Benar!');
+        } else {
+          alert('Jawaban Salah!');
+        }
+      });
+      optionsList.appendChild(optionItem);
     });
-    console.log("Questions:", questions);
-  } catch (error) {
-    console.error("Error fetching questions:", error);
-  }
+
+    questionElement.appendChild(optionsList);
+    questionsContainer.appendChild(questionElement);
+  });
 };
 
-fetchQuestions();
+// Panggil fungsi fetchQuestions saat halaman dimuat
+window.onload = fetchQuestions;
 
 const startGame = async () => {
   questions = await fetchQuestions();

@@ -1,35 +1,30 @@
 // firebase.js
-// Mengimpor modul Firebase dari CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// Konfigurasi Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAw6mmGUrDyFiVoRdejZZJ7U_Cp7Od-8aI",
   authDomain: "dipayang-quest.firebaseapp.com",
   projectId: "dipayang-quest",
-  storageBucket: "dipayang-quest.appspot.com", // Dikoreksi agar sesuai dengan format Firebase Storage
+  storageBucket: "dipayang-quest.appspot.com",
   messagingSenderId: "769511051480",
   appId: "1:769511051480:web:76606871be7200ce3047ad",
   measurementId: "G-BEP9KDRTCG"
 };
 
-// Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
-
-// Inisialisasi Firestore untuk database
 const db = getFirestore(app);
-
-// Inisialisasi Storage untuk file seperti gambar atau dokumen
 const storage = getStorage(app);
-
-// Inisialisasi Authentication untuk login pengguna (opsional)
 const auth = getAuth(app);
 
-// Mengekspor modul Firebase agar bisa digunakan di file lain
 export { db, storage, auth };
+
+// Variabel global
+let questions = [];
+let currentQuestionIndex = 0;
+let lives = 3;
 
 import { db } from './firebase.js';
 import { collection, getDocs, addDoc, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
@@ -64,19 +59,25 @@ function updateProgress(value) {
 // Contoh: update progress ke 30%
 updateProgress(30);
 
+// Variabel global
+let questions = [];
+let currentQuestionIndex = 0;
+let lives = 3;
+
+// Elemen DOM
+const gameContent = document.querySelector(".game-content");
+const playerLives = document.getElementById("player-lives");
 // Fungsi untuk mengambil data pertanyaan
 const fetchQuestions = async () => {
-  const questionsContainer = document.querySelector('.game-content');
   const querySnapshot = await getDocs(collection(db, "Questions"));
-
-  const questions = [];
+  questions = []; // Reset questions
   querySnapshot.forEach((doc) => {
     const questionData = doc.data();
-    // Pastikan data yang diambil valid
     if (questionData.question && Array.isArray(questionData.options)) {
       questions.push(questionData);
     }
   });
+};
 
   return questions;
 };
@@ -144,7 +145,7 @@ const playerLives = document.getElementById("player-lives");
 function loadQuestion(index) {
   if (index >= questions.length) {
     alert("Selamat! Anda telah menyelesaikan semua pertanyaan!");
-    restartGame(); // Restart game jika semua pertanyaan sudah dijawab
+    restartGame();
     return;
   }
 
@@ -196,7 +197,16 @@ function restartGame() {
   loadQuestion(currentQuestionIndex);
 }
 
-// Mulai game
-loadQuestion(currentQuestionIndex);
+// Fungsi untuk memulai game
+const startGame = async () => {
+  await fetchQuestions(); // Ambil pertanyaan dari Firestore
+  if (questions.length > 0) {
+    updateLives();
+    loadQuestion(currentQuestionIndex); // Mulai game
+  } else {
+    console.error("Tidak ada pertanyaan yang ditemukan.");
+  }
+};
 
-fetchQuestions().then(questions => console.log(questions));
+// Memulai game
+startGame();

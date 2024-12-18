@@ -31,21 +31,28 @@
     </header>
 
     <main>
-        <section class="card-container" id="task-container">
+            <section class="card-container" id="task-container">
+                <!-- Bagian Wacana -->
                 <div class="card-body" id="task-content">
-                    <!-- Konten wacana dan quest akan diisi secara dinamis -->
                     <h3>Nah...</h3>
+                    <p id="wacana-content">
+                        <!-- Konten wacana panjang akan diisi di sini -->
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fringilla, nunc at auctor ultrices, felis mi venenatis lacus, vel consectetur metus nisi nec purus.
+                    </p>
                 </div>
-                   
+            
+                <!-- Bagian QUEST -->
                 <div class="card-body" id="questions-container">
-                    <!-- Pertanyaan akan diisi secara dinamis -->
-                    <br>
                     <h3>QUEST</h3>
+                    <p id="question-content">
+                        <!-- Konten soal/jawab akan diisi di sini -->
+                        Apa yang kamu pelajari hari ini?
+                    </p>
                 </div>
-                    
-            <!-- Tombol navigasi -->
-            <button id="next-task" class="hidden">Lanjut ke Task Berikutnya</button>
-        </section>
+            
+                <!-- Tombol Navigasi -->
+                <button id="next-task" class="hidden">Lanjut ke Task Berikutnya</button>
+            </section>
 
         <!-- Feedback -->
         <div id="feedback" class="feedback hidden">

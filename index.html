@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bermain Belajar Menang">
-    <title>QUEST.ID</title>
+    <meta name="description" content="DIPAYANG Quest adalah permainan e-Learning dalam berbagai hal.">
+    <title>DIPAYANG Quest</title>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
@@ -18,7 +19,7 @@
 </head>
 <body>
     <header>
-        <h1>QUEST.ID</h1>
+        <h1>DIPAYANG QUEST</h1>
         <nav class="menu-card">
             <a href="#" class="menu-item" aria-label="Beranda">🏡</a>
             <a href="#" class="menu-item" aria-label="Leaderboard">📊</a>
@@ -30,56 +31,10 @@
     </header>
 
     <main>
+        <!-- Section Konten Dinamis -->
         <section class="card-container" id="card-container">
+            <!-- Kartu Navigasi ke Game 1 -->
             <div class="game-card" data-game="game1">
-                <img src="assets/icon/gamechapter1.jpg" alt="Game 1">
-                <h2>Game 1</h2>
-                <p>Mulai petualangan di Game 1!</p>
-            </div>
-    
-            <!-- Kartu Navigasi ke Game 2 -->
-            <div class="game-card" data-game="game2">
-                <img src="assets/icon/gamechapter2.jpg" alt="Game 2">
-                <h2>Game 2</h2>
-                <p>Jelajahi tantangan di Game 2!</p>
-            </div>
-                        <div class="game-card" data-game="game1">
-                <img src="assets/icon/gamechapter1.jpg" alt="Game 1">
-                <h2>Game 1</h2>
-                <p>Mulai petualangan di Game 1!</p>
-            </div>
-    
-            <!-- Kartu Navigasi ke Game 2 -->
-            <div class="game-card" data-game="game2">
-                <img src="assets/icon/gamechapter2.jpg" alt="Game 2">
-                <h2>Game 2</h2>
-                <p>Jelajahi tantangan di Game 2!</p>
-            </div>
-                        <div class="game-card" data-game="game1">
-                <img src="assets/icon/gamechapter1.jpg" alt="Game 1">
-                <h2>Game 1</h2>
-                <p>Mulai petualangan di Game 1!</p>
-            </div>
-    
-            <!-- Kartu Navigasi ke Game 2 -->
-            <div class="game-card" data-game="game2">
-                <img src="assets/icon/gamechapter2.jpg" alt="Game 2">
-                <h2>Game 2</h2>
-                <p>Jelajahi tantangan di Game 2!</p>
-            </div>
-                        <div class="game-card" data-game="game1">
-                <img src="assets/icon/gamechapter1.jpg" alt="Game 1">
-                <h2>Game 1</h2>
-                <p>Mulai petualangan di Game 1!</p>
-            </div>
-    
-            <!-- Kartu Navigasi ke Game 2 -->
-            <div class="game-card" data-game="game2">
-                <img src="assets/icon/gamechapter2.jpg" alt="Game 2">
-                <h2>Game 2</h2>
-                <p>Jelajahi tantangan di Game 2!</p>
-            </div>
-                        <div class="game-card" data-game="game1">
                 <img src="assets/icon/gamechapter1.jpg" alt="Game 1">
                 <h2>Game 1</h2>
                 <p>Mulai petualangan di Game 1!</p>
@@ -93,16 +48,7 @@
             </div>
         </section>
 
-        <div class="login-container" id="login-container" style="display: none;">
-            <h2>Login untuk Bermain</h2>
-            <form id="login-form">
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <p id="error-message" style="color: red;"></p>
-        </div>
-
+        <!-- Navigasi Paginasi -->
         <div class="pagination-controls">
             <button id="prev-btn" class="pagination-btn">⬅️</button>
             <button id="next-btn" class="pagination-btn">➡️</button>
@@ -163,7 +109,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 QUEST.id dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
+        <p>&copy; 2024 DIPAYANG Quest. Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
     </footer>
 
     <!-- Skrip JavaScript -->

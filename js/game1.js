@@ -76,7 +76,7 @@ const fetchQuestions = async () => {
   return questions;
 };
 
-let questions = []; // Array untuk menyimpan data pertanyaan
+fetchQuestions();
 
 const startGame = async () => {
   questions = await fetchQuestions();

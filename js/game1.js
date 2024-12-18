@@ -42,6 +42,7 @@ function checkAnswer(isCorrect) {
         feedbackText.textContent = "Benar! Anda mendapat 100 XP.";
         feedbackDiv.classList.remove('hidden', 'incorrect');
         feedbackDiv.classList.add('correct');
+        currentQuestionIndex++; // Pindah ke pertanyaan berikutnya
     } else {
         feedbackText.textContent = "Salah. Coba lagi!";
         feedbackDiv.classList.remove('hidden', 'correct');
@@ -51,12 +52,13 @@ function checkAnswer(isCorrect) {
     // Tampilkan feedback selama beberapa detik
     setTimeout(() => {
         feedbackDiv.classList.add('hidden');
+        loadQuestion(currentQuestionIndex); // Muat pertanyaan selanjutnya setelah feedback
     }, 2000);
 }
 
 function updateProgress(value) {
-    const progressBar = document.getElementById('level-progress');
-    progressBar.value = value; // Update progress level
+  const progressBar = document.getElementById('level-progress');
+  progressBar.value = value; // Update progress level
 }
 
 // Contoh: update progress ke 30%
@@ -65,14 +67,19 @@ updateProgress(30);
 // Fungsi untuk mengambil data pertanyaan
 const fetchQuestions = async () => {
   const questionsContainer = document.querySelector('.game-content');
-  const querySnapshot = await getDocs(collection(db, "Questions")); // Menggunakan "Questions" dengan huruf kapital
-  
-  const questions = [];
+  const querySnapshot = await getDocs(collection(db, "Questions"));
 
+  const questions = [];
   querySnapshot.forEach((doc) => {
     const questionData = doc.data();
-    questions.push(questionData); // Menambahkan pertanyaan ke dalam array
+    // Pastikan data yang diambil valid
+    if (questionData.question && Array.isArray(questionData.options)) {
+      questions.push(questionData);
+    }
   });
+
+  return questions;
+};
 
   // Menambahkan pertanyaan ke DOM
   questions.forEach((questionData) => {
@@ -137,6 +144,7 @@ const playerLives = document.getElementById("player-lives");
 function loadQuestion(index) {
   if (index >= questions.length) {
     alert("Selamat! Anda telah menyelesaikan semua pertanyaan!");
+    restartGame(); // Restart game jika semua pertanyaan sudah dijawab
     return;
   }
 

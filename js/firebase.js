@@ -3,7 +3,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 // Konfigurasi Firebase
 const firebaseConfig = {
@@ -25,8 +25,37 @@ const db = getFirestore(app);
 // Inisialisasi Storage untuk file seperti gambar atau dokumen
 const storage = getStorage(app);
 
-// Inisialisasi Authentication untuk login pengguna (opsional)
-const auth = getAuth(app);
+// Inisialisasi Firebase Auth
+const auth = getAuth();
+
+// Fungsi untuk login dengan email dan password
+export const loginWithEmailPassword = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("Login berhasil!", user.uid); // UID pemain yang unik
+    return user.uid; // Mengembalikan UID pemain
+  } catch (error) {
+    console.error("Login gagal", error);
+    return null;
+  }
+};
 
 // Mengekspor modul Firebase agar bisa digunakan di file lain
 export { db, storage, auth };
+
+// Fungsi untuk mengambil semua pertanyaan dari Firestore
+export const fetchQuestions = async () => {
+  const querySnapshot = await getDocs(collection(db, "Questions"));
+  let questions = [];
+  querySnapshot.forEach((doc) => {
+    questions.push(doc.data());
+  });
+  return questions;
+};
+
+// Fungsi untuk memperbarui progress pemain
+export const updatePlayerProgress = async (userId, progress) => {
+  const userDocRef = doc(db, "Users", userId);
+  await updateDoc(userDocRef, progress);
+};

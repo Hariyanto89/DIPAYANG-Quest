@@ -1,12 +1,13 @@
-// Import Firestore dari firebase.js
+// Import Firebase Auth dari firebase.js
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+import { loginWithEmailPassword } from './firebase.js'; // Import login helper function
 
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {
   try {
     await addDoc(collection(db, "tasks"), task);
-    console.log(`Tugas \"${task.title}\" berhasil ditambahkan.`);
+    console.log(`Tugas "${task.title}" berhasil ditambahkan.`);
   } catch (error) {
     console.error("Gagal menambahkan tugas:", error);
   }
@@ -56,7 +57,7 @@ const sampleTasks = [
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" }
+        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
 ];
 
 // Menambah data tugas contoh ke Firestore (Hanya jika belum ada data)
@@ -130,4 +131,40 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Render awal kartu tugas
   renderCards();
+});
+
+ // Fungsi untuk menampilkan form login
+  const displayLoginForm = () => {
+    const loginContainer = document.getElementById('login-container');
+    loginContainer.style.display = 'block'; // Menampilkan form login
+  };
+
+  // Menangani pengiriman form login
+  const loginForm = document.getElementById('login-form');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const errorMessage = document.getElementById('error-message');
+
+  loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    const playerId = await loginWithEmailPassword(email, password);
+
+    if (playerId) {
+      // Simpan playerId ke localStorage setelah login berhasil
+      localStorage.setItem('playerId', playerId);
+      // Sembunyikan form login dan lanjutkan ke game
+      const loginContainer = document.getElementById('login-container');
+      loginContainer.style.display = 'none';
+
+      // Lanjutkan ke game setelah login berhasil
+      window.location.href = "game1.html"; // Ganti dengan halaman game yang sesuai
+    } else {
+      // Tampilkan pesan error jika login gagal
+      errorMessage.textContent = 'Login gagal, periksa email dan password Anda!';
+    }
+  });
 });

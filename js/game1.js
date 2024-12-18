@@ -163,3 +163,5 @@ function restartGame() {
 
 // Mulai game
 loadQuestion(currentQuestionIndex);
+
+fetchQuestions().then(questions => console.log(questions));

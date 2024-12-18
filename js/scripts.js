@@ -1,6 +1,78 @@
 // Import Firestore dari firebase.js
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
-import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+
+const auth = getAuth();
+
+// Fungsi untuk login
+const loginUser = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("Login berhasil:", userCredential.user);
+  } catch (error) {
+    console.error("Gagal login:", error.message);
+  }
+};
+
+// Fungsi untuk mendapatkan data tugas berdasarkan ID pengguna
+const fetchPlayerTasks = async (playerId) => {
+  try {
+    const tasksRef = collection(db, "tasks");
+    const q = query(tasksRef, where("playerId", "==", playerId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Gagal mengambil tugas:", error);
+    return [];
+  }
+};
+
+// Mendengarkan status login pengguna
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log("Pengguna masuk:", user.uid);
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('dashboard-section').style.display = 'block';
+
+    // Ambil data pemain dan tugas
+    const tasks = await fetchPlayerTasks(user.uid);
+    renderTasks(tasks);
+
+    // Render informasi pemain
+    document.getElementById('player-id').innerText = user.uid;
+    document.getElementById('player-name').innerText = user.displayName || "Anonim";
+    // Tambahkan data lainnya jika ada
+  } else {
+    console.log("Pengguna belum masuk.");
+    document.getElementById('login-section').style.display = 'block';
+    document.getElementById('dashboard-section').style.display = 'none';
+  }
+});
+
+// Event untuk login
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  await loginUser(email, password);
+});
+
+// Fungsi untuk merender tugas
+const renderTasks = (tasks) => {
+  const container = document.querySelector('.card-container');
+  container.innerHTML = ''; // Hapus kartu sebelumnya
+  tasks.forEach((task) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${task.img}" alt="Badge">
+      <h3>${task.title}</h3>
+      <a href="#" class="read-btn">Pelajari</a>
+    `;
+    container.appendChild(card);
+  });
+};
 
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {

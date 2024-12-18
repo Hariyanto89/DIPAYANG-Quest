@@ -2,6 +2,34 @@
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
 
+// Fungsi untuk menambahkan atau memperbarui data pemain
+const addOrUpdatePlayer = async (player) => {
+  try {
+    const playerRef = doc(db, "players", player.id); // ID pemain sebagai referensi dokumen
+    await setDoc(playerRef, player, { merge: true }); // Menambahkan atau memperbarui data pemain
+    console.log(`Pemain dengan ID ${player.id} berhasil ditambahkan atau diperbarui.`);
+  } catch (error) {
+    console.error("Gagal menambahkan atau memperbarui data pemain:", error);
+  }
+};
+
+// Fungsi untuk mendapatkan data pemain berdasarkan ID
+const getPlayerData = async (playerId) => {
+  try {
+    const playerRef = doc(db, "players", playerId);
+    const playerDoc = await getDoc(playerRef);
+    if (playerDoc.exists()) {
+      return playerDoc.data();
+    } else {
+      console.log("Data pemain tidak ditemukan.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Terjadi kesalahan saat mengambil data pemain:", error);
+    return null;
+  }
+};
+
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {
   try {
@@ -67,12 +95,45 @@ document.addEventListener('DOMContentLoaded', async () => {
   const container = document.querySelector('.card-container'); // Kontainer kartu tugas
   const prevBtn = document.getElementById('prev-btn'); // Tombol halaman sebelumnya
   const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
+  const playerInfo = document.querySelector('.player-info'); // Elemen untuk menampilkan data pemain
   const cardsPerPage = 8; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
 
   // Ambil data tugas dari Firestore
   const allTasks = await getTasks();
 
+ // Ambil data pemain dari Firestore (misalnya ID pemain disimpan dalam variabel playerId)
+  const playerId = "player123"; // Ganti dengan ID pemain yang sesuai
+  const playerData = await getPlayerData(playerId);
+
+  if (playerData) {
+    // Menampilkan informasi pemain
+    playerInfo.innerHTML = `
+      <p>ID Pemain: ${playerData.id}</p>
+      <p>Nama Pemain: ${playerData.name}</p>
+      <p>Level: ${playerData.level}</p>
+      <p>XP: ${playerData.xp} / 1000</p>
+      <p>DIPAYANG Tokens: ${playerData.dipayangTokens}</p>
+      <p>Nyawa: ❤️❤️❤️</p>
+      <p>Badges: ${playerData.badges.join(', ')}</p>
+      <p>Sertifikat: ${playerData.certificates.join(', ')}</p>
+      <p>History Permainan: ${playerData.gameHistory.join(', ')}</p>
+    `;
+  } else {
+    // Jika data pemain tidak ada, tampilkan pesan default
+    playerInfo.innerHTML = `
+      <p>ID Pemain: -</p>
+      <p>Nama Pemain: -</p>
+      <p>Level: -</p>
+      <p>XP: 0 / 1000</p>
+      <p>DIPAYANG Tokens: 0</p>
+      <p>Nyawa: ❤️❤️❤️</p>
+      <p>Badges: -</p>
+      <p>Sertifikat: -</p>
+      <p>History Permainan: -</p>
+    `;
+  }
+  
   // Fungsi untuk merender kartu tugas
   const renderCards = () => {
     container.innerHTML = ''; // Bersihkan kartu sebelumnya
@@ -112,10 +173,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   };
 
-  // Event untuk tombol halaman sebelumnya
-  prevBtn.addEventListener('click', () => {
-    if (currentPage > 0) {
-      currentPage--;
+  // Event untuk tombol halaman berikutnya
+  nextBtn.addEventListener('click', () => {
+    if (currentPage < Math.ceil(allTasks.length / cardsPerPage) - 1) {
+      currentPage++;
       renderCards();
     }
   });

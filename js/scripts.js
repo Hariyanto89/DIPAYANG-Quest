@@ -1,73 +1,6 @@
 // Import Firestore dari firebase.js
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-// Fungsi untuk mendapatkan data tugas berdasarkan ID pemain
-const fetchPlayerTasks = async (playerId) => {
-  try {
-    const tasksRef = collection(db, "tasks");
-    const q = query(tasksRef, where("playerId", "==", playerId));
-    const querySnapshot = await getDocs(q);
-    const tasks = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    renderTasks(tasks); // Render tugas ke UI
-  } catch (error) {
-    console.error("Gagal mengambil tugas pemain:", error);
-  }
-};
-
-const auth = getAuth();
-
-// Fungsi untuk login pengguna
-const loginUser = async (email, password) => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("Login berhasil:", userCredential.user);
-  } catch (error) {
-    console.error("Gagal login:", error.message);
-  }
-};
-
-// Mendengarkan status login
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Pengguna masuk:", user.uid);
-    fetchPlayerTasks(user.uid); // Ambil tugas berdasarkan ID pengguna
-  } else {
-    console.log("Pengguna belum masuk.");
-    // Redirect ke halaman login jika diperlukan
-    window.location.href = "login.html";
-  }
-});
-
-// Fungsi untuk menambahkan atau memperbarui data pemain
-const addOrUpdatePlayer = async (player) => {
-  try {
-    const playerRef = doc(db, "players", player.id); // ID pemain sebagai referensi dokumen
-    await setDoc(playerRef, player, { merge: true }); // Menambahkan atau memperbarui data pemain
-    console.log(`Pemain dengan ID ${player.id} berhasil ditambahkan atau diperbarui.`);
-  } catch (error) {
-    console.error("Gagal menambahkan atau memperbarui data pemain:", error);
-  }
-};
-
-// Fungsi untuk mendapatkan data pemain berdasarkan ID
-const getPlayerData = async (playerId) => {
-  try {
-    const playerRef = doc(db, "players", playerId);
-    const playerDoc = await getDoc(playerRef);
-    if (playerDoc.exists()) {
-      return playerDoc.data();
-    } else {
-      console.log("Data pemain tidak ditemukan.");
-      return null;
-    }
-  } catch (error) {
-    console.error("Terjadi kesalahan saat mengambil data pemain:", error);
-    return null;
-  }
-};
 
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {
@@ -134,45 +67,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const container = document.querySelector('.card-container'); // Kontainer kartu tugas
   const prevBtn = document.getElementById('prev-btn'); // Tombol halaman sebelumnya
   const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
-  const playerInfo = document.querySelector('.player-info'); // Elemen untuk menampilkan data pemain
   const cardsPerPage = 8; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
 
   // Ambil data tugas dari Firestore
   const allTasks = await getTasks();
 
- // Ambil data pemain dari Firestore (misalnya ID pemain disimpan dalam variabel playerId)
-  const playerId = "player123"; // Ganti dengan ID pemain yang sesuai
-  const playerData = await getPlayerData(playerId);
-
-  if (playerData) {
-    // Menampilkan informasi pemain
-    playerInfo.innerHTML = `
-      <p>ID Pemain: ${playerData.id}</p>
-      <p>Nama Pemain: ${playerData.name}</p>
-      <p>Level: ${playerData.level}</p>
-      <p>XP: ${playerData.xp} / 1000</p>
-      <p>DIPAYANG Tokens: ${playerData.dipayangTokens}</p>
-      <p>Nyawa: ❤️❤️❤️</p>
-      <p>Badges: ${playerData.badges.join(', ')}</p>
-      <p>Sertifikat: ${playerData.certificates.join(', ')}</p>
-      <p>History Permainan: ${playerData.gameHistory.join(', ')}</p>
-    `;
-  } else {
-    // Jika data pemain tidak ada, tampilkan pesan default
-    playerInfo.innerHTML = `
-      <p>ID Pemain: -</p>
-      <p>Nama Pemain: -</p>
-      <p>Level: -</p>
-      <p>XP: 0 / 1000</p>
-      <p>DIPAYANG Tokens: 0</p>
-      <p>Nyawa: ❤️❤️❤️</p>
-      <p>Badges: -</p>
-      <p>Sertifikat: -</p>
-      <p>History Permainan: -</p>
-    `;
-  }
-  
   // Fungsi untuk merender kartu tugas
   const renderCards = () => {
     container.innerHTML = ''; // Bersihkan kartu sebelumnya
@@ -212,10 +112,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   };
 
-  // Event untuk tombol halaman berikutnya
-  nextBtn.addEventListener('click', () => {
-    if (currentPage < Math.ceil(allTasks.length / cardsPerPage) - 1) {
-      currentPage++;
+  // Event untuk tombol halaman sebelumnya
+  prevBtn.addEventListener('click', () => {
+    if (currentPage > 0) {
+      currentPage--;
       renderCards();
     }
   });
@@ -230,39 +130,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Render awal kartu tugas
   renderCards();
-});
-
-const renderTasks = (tasks) => {
-  const container = document.querySelector('.card-container');
-  container.innerHTML = ''; // Hapus konten sebelumnya
-
-  tasks.forEach((task) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="${task.img}" alt="Task Image">
-      <h3>${task.title}</h3>
-      <a href="#" class="read-btn">Pelajari</a>
-    `;
-    container.appendChild(card);
-  });
-};
-
-document.getElementById('login-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  loginUser(email, password);
-});
-
-import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-document.getElementById('logout-btn').addEventListener('click', async () => {
-  try {
-    await signOut(auth);
-    console.log("Berhasil logout");
-    window.location.href = "login.html"; // Redirect ke halaman login
-  } catch (error) {
-    console.error("Gagal logout:", error);
-  }
 });

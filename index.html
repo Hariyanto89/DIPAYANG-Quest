@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bermain Belajar Menang">
@@ -31,16 +30,15 @@
     </header>
 
     <main>
-        <!-- Section Konten Dinamis -->
         <section class="card-container" id="card-container">
-            <!-- Kartu Navigasi ke Game 1 -->
+            <!-- Kartu Game 1 -->
             <div class="game-card" data-game="game1">
                 <img src="assets/icon/gamechapter1.jpg" alt="Game 1">
                 <h2>Game 1</h2>
                 <p>Mulai petualangan di Game 1!</p>
             </div>
     
-            <!-- Kartu Navigasi ke Game 2 -->
+            <!-- Kartu Game 2 -->
             <div class="game-card" data-game="game2">
                 <img src="assets/icon/gamechapter2.jpg" alt="Game 2">
                 <h2>Game 2</h2>
@@ -48,7 +46,16 @@
             </div>
         </section>
 
-        <!-- Navigasi Paginasi -->
+        <div class="login-container" id="login-container" style="display: none;">
+            <h2>Login untuk Bermain</h2>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="error-message" style="color: red;"></p>
+        </div>
+
         <div class="pagination-controls">
             <button id="prev-btn" class="pagination-btn">⬅️</button>
             <button id="next-btn" class="pagination-btn">➡️</button>

@@ -65,7 +65,7 @@ updateProgress(30);
 // Fungsi untuk mengambil data pertanyaan
 const fetchQuestions = async () => {
   const questionsContainer = document.querySelector('.game-content');
-  const querySnapshot = await getDocs(collection(db, "questions"));
+  const querySnapshot = await getDocs(collection(db, "Questions")); // Menggunakan "Questions" dengan huruf kapital
   
   const questions = [];
 

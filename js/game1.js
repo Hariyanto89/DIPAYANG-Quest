@@ -67,21 +67,25 @@ const fetchQuestions = async () => {
   const questionsContainer = document.querySelector('.game-content');
   const querySnapshot = await getDocs(collection(db, "questions"));
   
+  const questions = [];
+
   querySnapshot.forEach((doc) => {
     const questionData = doc.data();
+    questions.push(questionData); // Menambahkan pertanyaan ke dalam array
+  });
+
+  // Menambahkan pertanyaan ke DOM
+  questions.forEach((questionData) => {
     const questionText = questionData.question;
     const options = questionData.options;
 
-    // Buat elemen untuk pertanyaan dan opsi
     const questionElement = document.createElement('div');
     questionElement.classList.add('question-item');
 
-    // Tambahkan pertanyaan
     const questionTitle = document.createElement('h3');
     questionTitle.textContent = questionText;
     questionElement.appendChild(questionTitle);
 
-    // Tambahkan opsi
     const optionsList = document.createElement('ul');
     options.forEach(option => {
       const optionItem = document.createElement('li');
@@ -99,21 +103,18 @@ const fetchQuestions = async () => {
     questionElement.appendChild(optionsList);
     questionsContainer.appendChild(questionElement);
   });
+
+  return questions; // Kembalikan array pertanyaan
 };
 
-// Panggil fungsi fetchQuestions saat halaman dimuat
-window.onload = fetchQuestions;
-
 const startGame = async () => {
-  questions = await fetchQuestions();
+  const questions = await fetchQuestions(); // Ambil pertanyaan dari Firestore
   if (questions.length > 0) {
-    loadQuestion(currentQuestionIndex);
+    loadQuestion(currentQuestionIndex); // Mulai permainan jika ada pertanyaan
   } else {
     console.error("Tidak ada pertanyaan yang ditemukan.");
   }
 };
-
-startGame();
 
 const saveProgress = async (userId, progress) => {
   try {

@@ -1,3 +1,6 @@
+import { db } from './firebase.js';
+import { collection, getDocs, addDoc, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
 function checkAnswer(isCorrect) {
     const feedbackDiv = document.getElementById('feedback');
     const feedbackText = document.getElementById('feedback-text');
@@ -27,23 +30,41 @@ function updateProgress(value) {
 updateProgress(30);
 
 // Data pertanyaan
-const questions = [
-  {
-    question: "Apa fungsi utama dari aset daerah?",
-    options: [
-      { text: "✅ Untuk pelayanan publik", correct: true },
-      { text: "❌ Untuk disewakan ke pihak swasta", correct: false },
-    ],
-  },
-  {
-    question: "Apa tujuan pengelolaan aset daerah?",
-    options: [
-      { text: "✅ Efisiensi dan efektivitas penggunaan", correct: true },
-      { text: "❌ Menambah pengeluaran daerah", correct: false },
-    ],
-  },
-  // Tambahkan pertanyaan lainnya di sini
-];
+const fetchQuestions = async () => {
+  const questions = [];
+  try {
+    const querySnapshot = await getDocs(collection(db, "questions"));
+    querySnapshot.forEach((doc) => {
+      questions.push({ id: doc.id, ...doc.data() });
+    });
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+  }
+  return questions;
+};
+
+let questions = []; // Array untuk menyimpan data pertanyaan
+
+const startGame = async () => {
+  questions = await fetchQuestions();
+  if (questions.length > 0) {
+    loadQuestion(currentQuestionIndex);
+  } else {
+    console.error("Tidak ada pertanyaan yang ditemukan.");
+  }
+};
+
+startGame();
+
+const saveProgress = async (userId, progress) => {
+  try {
+    const userDoc = doc(db, "users", userId);
+    await updateDoc(userDoc, { progress });
+    console.log("Progress berhasil disimpan.");
+  } catch (error) {
+    console.error("Error menyimpan progress:", error);
+  }
+};
 
 let currentQuestionIndex = 0;
 let lives = 3;

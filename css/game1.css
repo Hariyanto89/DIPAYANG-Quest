@@ -94,6 +94,33 @@ main {
     border-radius: 8px 8px 0 0;
 }
 
+.card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.card-body {
+    font-size: 1rem;
+    color: #333;
+}
+
+#next-task {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#next-task.hidden {
+    display: none;
+}
+
 /* Progress Bar */
 .progress-container {
     text-align: center;

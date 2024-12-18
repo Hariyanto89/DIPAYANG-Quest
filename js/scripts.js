@@ -2,8 +2,52 @@
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 const auth = getAuth();
+
+// Fungsi untuk mendaftarkan pengguna baru
+const signUpUser = async (name, email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Perbarui profil pengguna dengan nama lengkap
+    await updateProfile(user, { displayName: name });
+
+    console.log("Pendaftaran berhasil:", user);
+    alert("Pendaftaran berhasil! Silakan login.");
+    
+    // Tampilkan form login
+    document.getElementById('signup-section').style.display = 'none';
+    document.getElementById('login-section').style.display = 'block';
+  } catch (error) {
+    console.error("Gagal mendaftar:", error.message);
+    alert("Gagal mendaftar: " + error.message);
+  }
+};
+
+// Tombol untuk beralih ke form daftar
+document.getElementById('switch-to-signup').addEventListener('click', () => {
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('signup-section').style.display = 'block';
+});
+
+// Tombol untuk beralih ke form login
+document.getElementById('switch-to-login').addEventListener('click', () => {
+  document.getElementById('signup-section').style.display = 'none';
+  document.getElementById('login-section').style.display = 'block';
+});
+
+// Event untuk form daftar
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('signup-name').value;
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+  await signUpUser(name, email, password);
+});
 
 // Fungsi untuk login
 const loginUser = async (email, password) => {
@@ -57,6 +101,26 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value;
   await loginUser(email, password);
 });
+
+// Fungsi untuk menyimpan data pemain
+const savePlayerData = async (userId, name) => {
+  try {
+    await setDoc(doc(db, "players", userId), {
+      name: name,
+      level: 1,
+      xp: 0,
+      tokens: 0,
+      lives: 3,
+      badges: []
+    });
+    console.log("Data pemain berhasil disimpan.");
+  } catch (error) {
+    console.error("Gagal menyimpan data pemain:", error);
+  }
+};
+
+// Panggil fungsi ini setelah pendaftaran berhasil
+await savePlayerData(user.uid, name);
 
 // Fungsi untuk merender tugas
 const renderTasks = (tasks) => {

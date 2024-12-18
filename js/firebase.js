@@ -5,7 +5,6 @@ import { getFirestore, doc, updateDoc, getDocs, collection } from "https://www.g
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { loginWithEmailPassword } from './firebase.js';
-import { db, auth, storage } from './firebase.js';
 
 console.log("Auth instance:", auth);
 try {

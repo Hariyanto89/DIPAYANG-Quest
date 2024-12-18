@@ -254,3 +254,15 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   const password = document.getElementById('password').value;
   loginUser(email, password);
 });
+
+import { signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    console.log("Berhasil logout");
+    window.location.href = "login.html"; // Redirect ke halaman login
+  } catch (error) {
+    console.error("Gagal logout:", error);
+  }
+});

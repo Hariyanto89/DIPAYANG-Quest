@@ -1,7 +1,7 @@
 // firebase.js
 // Mengimpor modul Firebase dari CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore, doc, updateDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -44,18 +44,25 @@ export const loginWithEmailPassword = async (email, password) => {
 // Mengekspor modul Firebase agar bisa digunakan di file lain
 export { db, storage, auth };
 
-// Fungsi untuk mengambil semua pertanyaan dari Firestore
-export const fetchQuestions = async () => {
-  const querySnapshot = await getDocs(collection(db, "Questions"));
-  let questions = [];
-  querySnapshot.forEach((doc) => {
-    questions.push(doc.data());
-  });
-  return questions;
+// Fungsi untuk mengambil semua tugas dari Firestore
+export const getTasksFromFirestore = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "tasks"));
+    const tasks = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return tasks;
+  } catch (error) {
+    console.error("Gagal mengambil data tugas", error);
+    return [];
+  }
 };
 
 // Fungsi untuk memperbarui progress pemain
 export const updatePlayerProgress = async (userId, progress) => {
-  const userDocRef = doc(db, "Users", userId);
-  await updateDoc(userDocRef, progress);
+  try {
+    const userDocRef = doc(db, "Users", userId);
+    await updateDoc(userDocRef, progress);
+    console.log("Progress pemain berhasil diperbarui");
+  } catch (error) {
+    console.error("Gagal memperbarui progress pemain", error);
+  }
 };

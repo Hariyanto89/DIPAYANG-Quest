@@ -76,7 +76,7 @@ const fetchQuestions = async () => {
   }
 };
 
-fetchQuestions(Ywu9TdFNwiXqVg7H3l3g);
+fetchQuestions();
 
 const startGame = async () => {
   questions = await fetchQuestions();

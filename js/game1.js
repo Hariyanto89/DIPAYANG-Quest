@@ -1,9 +1,134 @@
 // firebase.js
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { db } from './firebase.js';
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { loginWithEmailPassword } from './firebase.js';
+
+const auth = getAuth();
+// Fungsi untuk mendaftarkan pengguna baru
+const signUpUser = async (name, email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Perbarui profil pengguna dengan nama lengkap
+    await updateProfile(user, { displayName: name });
+
+    console.log("Pendaftaran berhasil:", user);
+    alert("Pendaftaran berhasil! Silakan login.");
+    
+    // Tampilkan form login
+    document.getElementById('signup-section').style.display = 'none';
+    document.getElementById('login-section').style.display = 'block';
+  } catch (error) {
+    console.error("Gagal mendaftar:", error.message);
+    alert("Gagal mendaftar: " + error.message);
+  }
+};
+
+// Event untuk form daftar
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('signup-name').value;
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+  await signUpUser(name, email, password);
+});
+
+// Tombol untuk beralih ke form daftar
+document.getElementById('switch-to-signup').addEventListener('click', () => {
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('signup-section').style.display = 'block';
+});
+
+// Tombol untuk beralih ke form login
+document.getElementById('switch-to-login').addEventListener('click', () => {
+  document.getElementById('signup-section').style.display = 'none';
+  document.getElementById('login-section').style.display = 'block';
+});
+
+// Fungsi untuk login
+const loginUser = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("Login berhasil:", userCredential.user);
+  } catch (error) {
+    console.error("Gagal login:", error.message);
+  }
+};
+
+// Fungsi untuk mendapatkan data tugas berdasarkan ID pengguna
+const fetchPlayerTasks = async (playerId) => {
+  try {
+    const tasksRef = collection(db, "tasks");
+    const q = query(tasksRef, where("playerId", "==", playerId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Gagal mengambil tugas:", error);
+    return [];
+  }
+};
+
+// Mendengarkan status login pengguna
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log("Pengguna masuk:", user.uid);
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('dashboard-section').style.display = 'block';
+
+    // Ambil data pemain dan tugas
+    const tasks = await fetchPlayerTasks(user.uid);
+    renderTasks(tasks);
+
+    // Render informasi pemain
+    document.getElementById('player-id').innerText = user.uid;
+    document.getElementById('player-name').innerText = user.displayName || "Anonim";
+    // Tambahkan data lainnya jika ada
+  } else {
+    console.log("Pengguna belum masuk.");
+    document.getElementById('login-section').style.display = 'block';
+    document.getElementById('dashboard-section').style.display = 'none';
+  }
+});
+
+// Event untuk login
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  await loginUser(email, password);
+});
+
+// Fungsi untuk merender tugas
+const renderTasks = (tasks) => {
+  const container = document.querySelector('.card-container');
+  container.innerHTML = ''; // Hapus kartu sebelumnya
+  tasks.forEach((task) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${task.img}" alt="Badge">
+      <h3>${task.title}</h3>
+      <a href="#" class="read-btn">Pelajari</a>
+    `;
+    container.appendChild(card);
+  });
+};
+
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    console.log("Berhasil logout");
+  } catch (error) {
+    console.error("Gagal logout:", error);
+  }
+});
 
 const firebaseConfig = {
   apiKey: "AIzaSyAw6mmGUrDyFiVoRdejZZJ7U_Cp7Od-8aI",

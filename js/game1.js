@@ -152,18 +152,23 @@ const startGame = async () => {
 // Memulai permainan dengan login
 loginPlayer();
 
-const saveProgress = async (userId, progress) => {
-  try {
-    const userDoc = doc(db, "users", userId);
-    await updateDoc(userDoc, { progress });
-    console.log("Progress berhasil disimpan.");
-  } catch (error) {
-    console.error("Error menyimpan progress:", error);
+// Fungsi untuk menyimpan progres pemain di Firestore
+const saveProgress = async () => {
+  const progress = {
+    level: currentQuestionIndex,
+    xp: lives * 100, // Contoh XP
+    tokens: 0,  // Token bisa ditambahkan
+    lives: lives,
+    gameHistory: []  // Anda bisa mencatat sejarah permainan di sini
+  };
+
+  if (playerId) {
+    await updatePlayerProgress(playerId, progress); // Menggunakan playerId (UID) untuk menyimpan data
+  } else {
+    console.error("Tidak ada ID pemain yang ditemukan!");
   }
 };
 
-let currentQuestionIndex = 0;
-let lives = 3;
 
 // Elemen DOM
 const gameContent = document.querySelector(".game-content");

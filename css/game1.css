@@ -106,6 +106,12 @@ main {
     color: #333;
 }
 
+.card-body p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
 #next-task {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
@@ -115,6 +121,7 @@ main {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    align-self: center; /* Agar tombol berada di tengah */
 }
 
 #next-task.hidden {

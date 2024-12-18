@@ -4,6 +4,26 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase
 import { getFirestore, doc, updateDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { loginWithEmailPassword } from './firebase.js';
+import { db, auth, storage } from './firebase.js';
+
+console.log("Auth instance:", auth);
+try {
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  console.log("Login berhasil:", userCredential.user);
+} catch (error) {
+  console.error("Login gagal, kode error:", error.code, ", pesan:", error.message);
+}
+
+const email = "test@example.com";
+const password = "password123";
+const userId = await loginWithEmailPassword(email, password);
+
+if (userId) {
+  console.log("Login berhasil! User ID:", userId);
+} else {
+  console.error("Login gagal. Periksa kembali email dan password.");
+}
 
 // Konfigurasi Firebase
 const firebaseConfig = {

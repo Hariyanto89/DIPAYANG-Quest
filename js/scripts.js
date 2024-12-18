@@ -57,7 +57,7 @@ const sampleTasks = [
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
         { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
         { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
+        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" }
 ];
 
 // Menambah data tugas contoh ke Firestore (Hanya jika belum ada data)

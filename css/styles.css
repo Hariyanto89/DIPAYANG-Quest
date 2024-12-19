@@ -136,24 +136,18 @@ main {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 10px;
    overflow: hidden;
    font-family: 'Arial', sans-serif;
    font-weight: normal;
     text-align: justify;
-    align-items: center;
 }
 
 .task-container img {
-  width: 250px;
+  width: 150px;
   height: auto;
   margin: 10px 0;
-}
-
-.task-container .text {
-  flex-grow: 1;  /* Memastikan teks mengisi ruang yang tersisa */
-  text-align: justify;  /* Teks rata kiri dan kanan */
 }
 
 .questions {

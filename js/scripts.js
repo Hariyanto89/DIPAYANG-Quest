@@ -91,7 +91,7 @@ const staticTasks = [
 });
 
 document.getElementById('submit-answer1').addEventListener('click', function() {
-    checkAnswer('answer1', this, 'fase pertama');
+    checkAnswer('answer1', this, 'inisiasi');
 });
 
 document.getElementById('submit-answer2').addEventListener('click', function() {

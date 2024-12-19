@@ -171,6 +171,7 @@ main {
 .submit-answer.correct {
     background-color: green;
     color: white;
+    cursor: not-allowed;
 }
 
 .submit-answer.incorrect {
@@ -181,6 +182,12 @@ main {
 .submit-answer.neutral {
     background-color: #f0f0f0;
     color: black;
+}
+
+input:disabled {
+    background-color: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
 }
 
 .questions input {

@@ -136,8 +136,8 @@ main {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 5px;
+    margin-bottom: 5px;
    overflow: hidden;
    font-family: 'Arial', sans-serif;
    font-weight: normal;
@@ -151,16 +151,16 @@ main {
 }
 
 .questions {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .questions .question {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .questions input {
-  width: 100%;
-  padding: 10px;
+  width: 75%;
+  padding: 5px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;

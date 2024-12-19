@@ -1,0 +1,12 @@
+{
+  "questions": [
+    {
+      "question": "Apa itu project management?",
+      "answers": ["jawaban1", "jawaban2"]
+    },
+    {
+      "question": "Apa manfaat game-based learning?",
+      "answers": ["jawaban3", "jawaban4"]
+    }
+  ]
+}

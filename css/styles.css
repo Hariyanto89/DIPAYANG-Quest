@@ -141,6 +141,29 @@ main {
     overflow: hidden;
 }
 
+.task-container img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  margin: 10px 0;
+}
+
+.questions {
+  margin-top: 20px;
+}
+
+.questions .question {
+  margin-bottom: 15px;
+}
+
+.questions input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .task-container, .card-container {
     height: 100%; /* Atau auto jika ingin menyesuaikan konten */
 }

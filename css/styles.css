@@ -138,7 +138,9 @@ main {
     flex-direction: column;
     gap: 15px;
     margin-bottom: 20px;
-    overflow: hidden;
+   overflow: hidden;
+   font-family: 'Arial', sans-serif;
+   font-weight: normal;
 }
 
 .task-container img {

@@ -141,6 +141,7 @@ main {
    overflow: hidden;
    font-family: 'Arial', sans-serif;
    font-weight: normal;
+    text-align: justify;
 }
 
 .task-container img {

@@ -130,3 +130,32 @@ document.getElementById('submit-answers').addEventListener('click', async () => 
   }
 });
 
+// Mengambil data tugas dari JSON
+const loadTaskData = async () => {
+  const response = await fetch('data/ProjectManagement.json');
+  const taskData = await response.json();
+
+  // Mengisi data tugas di halaman
+  document.getElementById('task-title').textContent = taskData.taskTitle;
+  document.getElementById('task-description').textContent = taskData.description;
+  document.getElementById('task-hint').src = taskData.hintImage || '';
+
+  // Menambahkan pertanyaan ke halaman
+  const questionsContainer = document.getElementById('questions-container');
+  taskData.questions.forEach((question, index) => {
+    const questionElement = document.createElement('div');
+    questionElement.classList.add('question');
+    questionElement.innerHTML = `
+      <p>${question.question}</p>
+      ${question.options.map(option => `
+        <label>
+          <input type="radio" name="question${index}" value="${option}">
+          ${option}
+        </label>
+      `).join('')}
+    `;
+    questionsContainer.appendChild(questionElement);
+  });
+};
+
+document.addEventListener('DOMContentLoaded', loadTaskData);

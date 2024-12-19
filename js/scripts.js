@@ -2,6 +2,46 @@
 import { db, auth, loginWithEmailPassword, fetchQuestions, updatePlayerProgress } from './firebase.js';
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const userId = userCredential.user.uid;
+
+        // Simpan data tambahan pengguna ke Firestore
+        await addDoc(collection(db, "Users"), { name, email, userId });
+
+        alert('Pendaftaran berhasil!');
+        document.getElementById('signup-section').style.display = 'none';
+        document.getElementById('login-section').style.display = 'block';
+    } catch (error) {
+        alert('Pendaftaran gagal: ' + error.message);
+    }
+});
+
+document.getElementById('switch-to-signup')?.addEventListener('click', () => {
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('signup-section').style.display = 'block';
+});
+
+document.getElementById('switch-to-login')?.addEventListener('click', () => {
+    document.getElementById('signup-section').style.display = 'none';
+    document.getElementById('login-section').style.display = 'block';
+});
+
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        document.getElementById('player-id').textContent = user.uid;
+    } else {
+        document.getElementById('player-id').textContent = '-';
+        alert('Anda telah logout.');
+    }
+});
+
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {
     try {

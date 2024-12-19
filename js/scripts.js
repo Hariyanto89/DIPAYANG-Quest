@@ -42,12 +42,6 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
-card.querySelector('.read-btn').addEventListener('click', (e) => {
-    e.preventDefault();
-    alert(`Anda memilih tugas: ${task.title}`);
-    // Navigasi ke halaman detail tugas bisa ditambahkan di sini
-});
-
 // Fungsi untuk menambah tugas ke Firestore
 const addTask = async (task) => {
     try {

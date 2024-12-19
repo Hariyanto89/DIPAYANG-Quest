@@ -1,12 +1,31 @@
 {
+  "taskTitle": "Project Management",
+  "description": "Pelajari dasar-dasar manajemen proyek, termasuk perencanaan, pelaksanaan, dan evaluasi proyek.",
   "questions": [
     {
-      "question": "Apa itu project management?",
-      "answers": ["jawaban1", "jawaban2"]
+      "question": "Apa itu Project Management?",
+      "options": ["Perencanaan proyek", "Pengelolaan sumber daya", "Pengorganisasian dan pengawasan proyek"],
+      "answers": ["Pengorganisasian dan pengawasan proyek"]
     },
     {
-      "question": "Apa manfaat game-based learning?",
-      "answers": ["jawaban3", "jawaban4"]
+      "question": "Apa saja fase dalam Project Management?",
+      "options": ["Inisiasi", "Perencanaan", "Pelaksanaan", "Pemantauan dan Pengendalian", "Penutupan"],
+      "answers": ["Inisiasi", "Perencanaan", "Pelaksanaan", "Pemantauan dan Pengendalian", "Penutupan"]
+    },
+    {
+      "question": "Apa tujuan dari perencanaan dalam manajemen proyek?",
+      "options": ["Menentukan jadwal", "Menentukan anggaran", "Mengidentifikasi risiko", "Meningkatkan komunikasi"],
+      "answers": ["Menentukan jadwal", "Menentukan anggaran", "Mengidentifikasi risiko"]
+    },
+    {
+      "question": "Siapa yang bertanggung jawab atas keberhasilan atau kegagalan proyek?",
+      "options": ["Manajer proyek", "Tim proyek", "Stakeholder", "Semua di atas"],
+      "answers": ["Manajer proyek"]
+    },
+    {
+      "question": "Apa itu anggaran dalam konteks manajemen proyek?",
+      "options": ["Perencanaan keuangan proyek", "Pembiayaan proyek", "Evaluasi proyek", "Pembayaran untuk sumber daya"],
+      "answers": ["Perencanaan keuangan proyek"]
     }
   ]
 }

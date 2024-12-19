@@ -133,7 +133,7 @@ main {
     background-color: #f0f0f0; /* Pastikan warnanya konsisten */
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;

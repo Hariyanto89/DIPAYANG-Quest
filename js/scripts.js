@@ -1,5 +1,5 @@
 // Import Firestore dari firebase.js
-import { db, auth, loginWithEmailPassword, fetchQuestions, updatePlayerProgress } from './firebase.js';
+import { db, auth, loginWithEmailPassword, fetchQuestions, updatePlayerProgress, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from './firebase.js';
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Event untuk signup
@@ -8,7 +8,59 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
     const name = document.getElementById('signup-name').value;
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
+const logoutButton = document.getElementById("logout-btn");
 
+// Login
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log("Logged in:", userCredential.user);
+            alert("Login sukses!");
+        })
+        .catch((error) => {
+            console.error("Login error:", error);
+            alert("Login gagal: " + error.message);
+        });
+});
+
+// Signup
+signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("signup-name").value;
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log("User registered:", userCredential.user);
+            alert("Akun berhasil dibuat!");
+        })
+        .catch((error) => {
+            console.error("Signup error:", error);
+            alert("Signup gagal: " + error.message);
+        });
+});
+
+// Logout
+logoutButton.addEventListener("click", () => {
+    signOut(auth)
+        .then(() => {
+            console.log("Logged out");
+            alert("Logout sukses!");
+        })
+        .catch((error) => {
+            console.error("Logout error:", error);
+            alert("Logout gagal: " + error.message);
+        });
+});
+
+    
     try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const userId = userCredential.user.uid;

@@ -399,6 +399,12 @@ footer {
     }
 }
 
+    .task-container {
+        overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller cards */
+        gap: 0.8rem;
+    }
+
 /* Responsif untuk perangkat kecil (ponsel dan tablet) */
 @media (max-width: 768px) {
     #prev-btn, #next-btn {

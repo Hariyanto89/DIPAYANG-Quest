@@ -90,6 +90,64 @@ const staticTasks = [
   addPlayerData(samplePlayer);
 });
 
+// Variabel untuk melacak jumlah jawaban benar
+let correctAnswers = 0;
+
+// Total jumlah pertanyaan di halaman ini
+const totalQuestions = document.querySelectorAll('.question').length;
+
+// Fungsi untuk mengecek jawaban
+function checkAnswer(inputId, button, correctAnswer) {
+    const inputField = document.getElementById(inputId);
+    const userAnswer = inputField.value.trim().toLowerCase();
+
+    if (userAnswer === correctAnswer.toLowerCase()) {
+        button.classList.add('correct');
+        button.textContent = 'Benar';
+        button.disabled = true; // Nonaktifkan tombol
+        inputField.disabled = true; // Nonaktifkan input
+      
+        // Increment jawaban benar
+        correctAnswers++;
+
+        // Jika semua jawaban benar, pindah ke laman berikutnya
+        if (correctAnswers === totalQuestions) {
+            setTimeout(() => {
+                goToNextTask();
+            }, 1000); // Tunggu 1 detik sebelum pindah halaman
+        }
+    } else {
+        button.classList.add('incorrect');
+        button.textContent = 'Salah';
+        setTimeout(() => {
+            button.classList.remove('incorrect');
+            button.classList.add('neutral');
+            button.textContent = 'Submit Jawaban';
+        }, 1000);
+    }
+}
+
+// Fungsi untuk beralih ke laman berikutnya
+function goToNextTask() {
+    // Ambil URL saat ini
+    const currentUrl = window.location.href;
+
+    // Ekstrak nomor task dari URL
+    const taskNumberMatch = currentUrl.match(/task(\d+)/);
+    if (taskNumberMatch) {
+        const currentTaskNumber = parseInt(taskNumberMatch[1], 10);
+        const nextTaskNumber = currentTaskNumber + 1;
+
+        // Buat URL untuk laman berikutnya
+        const nextUrl = currentUrl.replace(`task${currentTaskNumber}`, `task${nextTaskNumber}`);
+        
+        // Redirect ke URL berikutnya
+        window.location.href = nextUrl;
+    } else {
+        alert('Ini adalah tugas terakhir!');
+    }
+}
+
 document.getElementById('submit-answer1').addEventListener('click', function() {
     checkAnswer('answer1', this, 'inisiasi');
 });
@@ -101,23 +159,3 @@ document.getElementById('submit-answer2').addEventListener('click', function() {
 document.getElementById('submit-answer3').addEventListener('click', function() {
     checkAnswer('answer3', this, 'Gantt Chart');
 });
-
-function checkAnswer(inputId, button, correctAnswer) {
-    const inputField = document.getElementById(inputId);
-    const userAnswer = inputField.value.trim().toLowerCase();
-
-    if (userAnswer === correctAnswer.toLowerCase()) {
-        button.classList.add('correct');
-        button.textContent = 'Benar';
-        button.disabled = true; // Nonaktifkan tombol
-        inputField.disabled = true; // Nonaktifkan input
-    } else {
-        button.classList.add('incorrect');
-        button.textContent = 'Salah';
-        setTimeout(() => {
-            button.classList.remove('incorrect');
-            button.classList.add('neutral');
-            button.textContent = 'Submit Jawaban';
-        }, 1000);
-    }
-}

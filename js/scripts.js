@@ -96,89 +96,67 @@ let correctAnswers = 0;
 // Total jumlah pertanyaan di halaman ini
 const totalQuestions = document.querySelectorAll('.question').length;
 
-// Fungsi untuk mengecek jawaban
-function checkAnswer(inputId, button, correctAnswer) {
-    const inputField = document.getElementById(inputId);
-    const userAnswer = inputField.value.trim().toLowerCase();
+document.addEventListener('DOMContentLoaded', () => {
+    // Fungsi untuk mengecek jawaban
+    function checkAnswer(inputId, button, correctAnswer) {
+        const inputField = document.getElementById(inputId);
+        const userAnswer = inputField.value.trim().toLowerCase();
 
-    if (userAnswer === correctAnswer.toLowerCase()) {
-        button.classList.add('correct');
-        button.textContent = 'Benar';
-        button.disabled = true; // Nonaktifkan tombol
-        inputField.disabled = true; // Nonaktifkan input
-      
-        // Increment jawaban benar
-        correctAnswers++;
+        if (userAnswer === correctAnswer.toLowerCase()) {
+            button.classList.add('correct');
+            button.textContent = 'Benar';
+            button.disabled = true; // Nonaktifkan tombol
+            inputField.disabled = true; // Nonaktifkan input
 
-        // Jika semua jawaban benar, pindah ke laman berikutnya
-        if (correctAnswers === totalQuestions) {
+            // Increment jawaban benar
+            correctAnswers++;
+
+            // Jika semua jawaban benar, pindah ke laman berikutnya
+            if (correctAnswers === totalQuestions) {
+                setTimeout(() => {
+                    goToNextTask();
+                }, 1000); // Tunggu 1 detik sebelum pindah halaman
+            }
+        } else {
+            button.classList.add('incorrect');
+            button.textContent = 'Salah';
             setTimeout(() => {
-                goToNextTask();
-            }, 1000); // Tunggu 1 detik sebelum pindah halaman
+                button.classList.remove('incorrect');
+                button.classList.add('neutral');
+                button.textContent = 'Submit Jawaban';
+            }, 1000);
         }
-    } else {
-        button.classList.add('incorrect');
-        button.textContent = 'Salah';
-        setTimeout(() => {
-            button.classList.remove('incorrect');
-            button.classList.add('neutral');
-            button.textContent = 'Submit Jawaban';
-        }, 1000);
     }
-}
 
-// Fungsi untuk beralih ke laman berikutnya
-function goToNextTask() {
-    // Ambil URL saat ini
-    const currentUrl = window.location.href;
+    // Fungsi untuk beralih ke laman berikutnya
+    function goToNextTask() {
+        // Ambil URL saat ini
+        const currentUrl = window.location.href;
 
-    // Ekstrak nomor task dari URL
-    const taskNumberMatch = currentUrl.match(/task(\d+)/);
-    if (taskNumberMatch) {
-        const currentTaskNumber = parseInt(taskNumberMatch[1], 10);
-        const nextTaskNumber = currentTaskNumber + 1;
+        // Ekstrak nomor task dari URL
+        const taskNumberMatch = currentUrl.match(/task(\d+)/);
+        if (taskNumberMatch) {
+            const currentTaskNumber = parseInt(taskNumberMatch[1], 10);
+            const nextTaskNumber = currentTaskNumber + 1;
 
-        // Buat URL untuk laman berikutnya
-        const nextUrl = currentUrl.replace(`task${currentTaskNumber}`, `task${nextTaskNumber}`);
-        
-        // Redirect ke URL berikutnya
-        window.location.href = nextUrl;
-    } else {
-        alert('Ini adalah tugas terakhir!');
+            // Buat URL untuk laman berikutnya
+            const nextUrl = currentUrl.replace(`task${currentTaskNumber}`, `task${nextTaskNumber}`);
+
+            // Redirect ke URL berikutnya
+            window.location.href = nextUrl;
+        } else {
+            alert('Ini adalah tugas terakhir!');
+        }
     }
-}
 
-document.getElementById('submit-answer1').addEventListener('click', function() {
-    checkAnswer('answer1', this, 'inisiasi');
+    // Event delegation untuk menangani klik tombol submit
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('submit-answer')) {
+            const button = event.target;
+            const inputId = button.id.replace('submit-', 'answer'); // Menyesuaikan ID input
+            const correctAnswer = button.getAttribute('data-correct-answer'); // Ambil jawaban benar dari atribut data
+
+            checkAnswer(inputId, button, correctAnswer);
+        }
+    });
 });
-
-document.getElementById('submit-answer2').addEventListener('click', function() {
-    checkAnswer('answer2', this, 'risiko');
-});
-
-document.getElementById('submit-answer3').addEventListener('click', function() {
-    checkAnswer('answer3', this, 'Gantt Chart');
-});
-
-document.getElementById('submit-answer4').addEventListener('click', function() {
-    checkAnswer('answer4', this, 'SMART');
-});
-
-document.getElementById('submit-answer5').addEventListener('click', function() {
-    checkAnswer('answer5', this, 'WBS');
-});
-
-document.getElementById('submit-answer6').addEventListener('click', function() {
-    checkAnswer('answer6', this, 'Gantt Chart');
-});
-
-document.getElementById('submit-answer7').addEventListener('click', function() {
-    checkAnswer('answer7', this, 'Tenaga kerja');
-});
-
-document.getElementById('submit-answer8').addEventListener('click', function() {
-    checkAnswer('answer8', this, 'Risk Management Plan');
-});
-
-console.log(`Input ID: ${inputField.id}`);
-console.log(`Correct Answer: ${correctAnswer}`);

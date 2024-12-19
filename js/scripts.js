@@ -91,18 +91,24 @@ const staticTasks = [
 });
 
 const validateAnswers = async () => {
-  const response = await fetch('data/ProjectManagement.json');
-  const data = await response.json();
-  const correctAnswers = data.answers;
-  const userAnswers = [...document.querySelectorAll('.question input')].map(input => input.value);
+  try {
+    const response = await fetch('data/ProjectManagement.json');
+    if (!response.ok) throw new Error('Gagal mengakses file JSON');
+    const data = await response.json();
+    const correctAnswers = data.answers;
+    const userAnswers = [...document.querySelectorAll('.question input')].map(input => input.value);
 
-  return correctAnswers.every((answer, index) => answer === userAnswers[index]);
+    return correctAnswers.every((answer, index) => answer === userAnswers[index]);
+  } catch (error) {
+    console.error('Error validating answers:', error);
+    return false; // Kembalikan false jika terjadi error
+  }
 };
 
 document.getElementById('submit-answers').addEventListener('click', async () => {
   const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
   const taskId = 'ProjectManagement';
-  const playerId = '';
+  const playerId = localStorage.getItem('playerId') || ''; // Atau sesuai dengan cara Anda mendapatkan ID pemain
 
   // Validasi jawaban
   if (await validateAnswers()) {

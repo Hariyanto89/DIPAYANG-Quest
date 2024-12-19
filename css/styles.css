@@ -151,11 +151,36 @@ main {
 }
 
 .questions {
-  margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
-.questions .question {
-  margin-bottom: 10px;
+.question {
+    margin-bottom: 15px;
+}
+
+.submit-answer {
+    margin-left: 10px;
+    padding: 5px 15px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+.submit-answer.correct {
+    background-color: green;
+    color: white;
+}
+
+.submit-answer.incorrect {
+    background-color: red;
+    color: white;
+}
+
+.submit-answer.neutral {
+    background-color: #f0f0f0;
+    color: black;
 }
 
 .questions input {

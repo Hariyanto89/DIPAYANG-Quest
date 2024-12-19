@@ -91,7 +91,7 @@ const staticTasks = [
 });
 
 const validateAnswers = async () => {
-  const response = await fetch('task1.json');
+  const response = await fetch('data/ProjectManagement.json');
   const data = await response.json();
   const correctAnswers = data.answers;
   const userAnswers = [...document.querySelectorAll('.question input')].map(input => input.value);

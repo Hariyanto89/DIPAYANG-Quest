@@ -142,11 +142,11 @@ main {
    font-family: 'Arial', sans-serif;
    font-weight: normal;
     text-align: justify;
+    align-items: center;
 }
 
 .task-container img {
-  width: 100%;
-  max-width: 150px;
+  width: 250px;
   height: auto;
   margin: 10px 0;
 }

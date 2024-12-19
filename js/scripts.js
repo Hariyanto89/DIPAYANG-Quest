@@ -96,6 +96,12 @@ const totalQuestions = document.querySelectorAll('.question').length;
 // Variabel untuk melacak jumlah jawaban benar
 let correctAnswers = 0;
 
+// Menghubungkan tombol submit dengan fungsi `checkAnswer`
+document.querySelectorAll('.submit-answer').forEach(button => {
+    const inputId = button.id.replace('submit-answer', 'answer'); // Mengambil ID input terkait
+    button.addEventListener('click', () => checkAnswer(inputId, button));
+});
+
 // Fungsi untuk mengecek jawaban
 function checkAnswer(inputId, button) {
     const inputField = document.getElementById(inputId);
@@ -142,21 +148,3 @@ function goToNextTask() {
         alert('Ini adalah tugas terakhir!');
     }
 }
-
-// Menghubungkan tombol submit dengan fungsi `checkAnswer`
-document.querySelectorAll('.submit-answer').forEach(button => {
-    const inputId = button.id.replace('submit-answer', 'answer'); // Mengambil ID input terkait
-    button.addEventListener('click', () => checkAnswer(inputId, button));
-});
-
-    // Event delegation untuk menangani klik tombol submit
-    document.addEventListener('click', function(event) {
-        if (event.target && event.target.classList.contains('submit-answer')) {
-            const button = event.target;
-            const inputId = button.id.replace('submit-', 'answer'); // Menyesuaikan ID input
-            const correctAnswer = button.getAttribute('data-correct-answer'); // Ambil jawaban benar dari atribut data
-
-            checkAnswer(inputId, button, correctAnswer);
-        }
-    });
-});

@@ -35,8 +35,10 @@ document.getElementById('switch-to-login')?.addEventListener('click', () => {
 
 auth.onAuthStateChanged((user) => {
     if (user) {
+        console.log("User logged in:", user.uid);
         document.getElementById('player-id').textContent = user.uid;
     } else {
+        console.log("No user logged in.");
         document.getElementById('player-id').textContent = '-';
         alert('Anda telah logout.');
     }
@@ -182,4 +184,27 @@ document.getElementById('logout-btn')?.addEventListener('click', () => {
     auth.signOut();
     alert('Logout berhasil!');
     document.getElementById('player-id').textContent = '-';
+});
+
+export const loginWithEmailPassword = async (email, password) => {
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        return userCredential.user.uid;
+    } catch (error) {
+        console.error("Login failed:", error);
+        return null;
+    }
+};
+
+console.log("Auth:", auth);
+console.log("DB:", db);
+
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!auth.currentUser) {
+        alert('Silakan login terlebih dahulu.');
+        window.location.href = 'login.html';
+    } else {
+        console.log('User is authenticated:', auth.currentUser.uid);
+        // Render tasks or other data
+    }
 });

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.card-container'); // Kontainer kartu tugas
   const prevBtn = document.getElementById('prev-btn'); // Tombol halaman sebelumnya
   const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
-  const cardsPerPage = 4; // Jumlah kartu per halaman
+  const cardsPerPage = 8; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
 
   // Fungsi untuk merender kartu tugas

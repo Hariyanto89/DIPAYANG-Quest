@@ -89,3 +89,45 @@ document.addEventListener('DOMContentLoaded', () => {
   // Tambahkan data pemain ke Firebase
   addPlayerData(samplePlayer);
 });
+
+document.getElementById('submit-answers').addEventListener('click', async () => {
+  const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
+  const taskId = 'task1'; // Sesuaikan ID tugas
+  const playerId = 'player123'; // ID pemain dari sesi
+  
+  try {
+    await addDoc(collection(db, 'task_results'), {
+      playerId,
+      taskId,
+      answers,
+      timestamp: new Date(),
+    });
+    alert('Jawaban disimpan. Lanjutkan ke tugas berikutnya.');
+    window.location.href = 'task2.html'; // Navigasi ke tugas berikutnya
+  } catch (error) {
+    console.error('Gagal menyimpan jawaban:', error);
+  }
+});
+
+// task1.json
+{
+  "answers": ["jawaban1", "jawaban2"]
+}
+
+const validateAnswers = async () => {
+  const response = await fetch('task1.json');
+  const data = await response.json();
+  const correctAnswers = data.answers;
+  const userAnswers = [...document.querySelectorAll('.question input')].map(input => input.value);
+
+  return correctAnswers.every((answer, index) => answer === userAnswers[index]);
+};
+
+document.getElementById('submit-answers').addEventListener('click', async () => {
+  if (await validateAnswers()) {
+    alert('Semua jawaban benar! Lanjutkan ke tugas berikutnya.');
+    window.location.href = 'task2.html';
+  } else {
+    alert('Jawaban Anda belum benar. Coba lagi.');
+  }
+});

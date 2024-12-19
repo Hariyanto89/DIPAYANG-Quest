@@ -179,3 +179,6 @@ document.getElementById('submit-answer7').addEventListener('click', function() {
 document.getElementById('submit-answer8').addEventListener('click', function() {
     checkAnswer('answer8', this, 'Risk Management Plan');
 });
+
+console.log(`Input ID: ${inputField.id}`);
+console.log(`Correct Answer: ${correctAnswer}`);

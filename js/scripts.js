@@ -101,8 +101,8 @@ const validateAnswers = async () => {
 
 document.getElementById('submit-answers').addEventListener('click', async () => {
   const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
-  const taskId = 'task1';
-  const playerId = 'player123';
+  const taskId = 'ProjectManagement';
+  const playerId = '';
 
   // Validasi jawaban
   if (await validateAnswers()) {

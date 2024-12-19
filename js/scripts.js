@@ -14,7 +14,7 @@ const addPlayerData = async (player) => {
 
 // Inisialisasi data tugas statis
 const staticTasks = [
-  { img: "assets/icon/gamechapter1.jpg", title: "Project Management", link: "ProjectManagement.html" },
+  { img: "assets/icon/gamechapter1.jpg", title: "Project Management", link: "https://hariyanto89.github.io/Quest.ID/ProjectManagement.html" },
   { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani", link: "game2.html" },
   { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani", link: "game3.html" },
   { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4", link: "game4.html" },

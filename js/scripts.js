@@ -1,115 +1,57 @@
 // Import Firestore dari firebase.js
 import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
-import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
 
-// Fungsi untuk menambah tugas ke Firestore
-const addTask = async (task) => {
+// Fungsi untuk menambah data pemain ke Firestore
+const addPlayerData = async (player) => {
   try {
-    await addDoc(collection(db, "tasks"), task);
-    console.log(`Tugas \"${task.title}\" berhasil ditambahkan.`);
+    await addDoc(collection(db, "players"), player);
+    console.log(`Data pemain "${player.name}" berhasil ditambahkan.`);
   } catch (error) {
-    console.error("Gagal menambahkan tugas:", error);
+    console.error("Gagal menambahkan data pemain:", error);
   }
 };
 
-// Fungsi untuk mengambil data tugas dari Firestore
-const getTasks = async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, "tasks"));
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error("Terjadi kesalahan saat mengambil data:", error);
-    return [];
-  }
-};
-
-// Inisialisasi data tugas contoh (hanya digunakan untuk pengisian awal)
-const sampleTasks = [
-        { img: "assets/icon/gamechapter1.jpg", title: "Petani Aseters" },
-        { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani" },
-        { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" }
+// Inisialisasi data tugas statis
+const staticTasks = [
+  { img: "assets/icon/gamechapter1.jpg", title: "Petani Aseters", link: "game1.html" },
+  { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani", link: "game2.html" },
+  { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani", link: "game3.html" },
+  { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4", link: "game4.html" },
+  { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5", link: "game5.html" },
+  { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6", link: "game6.html" },
+  { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" },
 ];
 
-// Menambah data tugas contoh ke Firestore (Hanya jika belum ada data)
-// sampleTasks.forEach(addTask); // Uncomment baris ini jika ingin menambahkan data contoh
-
 // Event DOMContentLoaded untuk menjalankan kode setelah halaman dimuat
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.card-container'); // Kontainer kartu tugas
   const prevBtn = document.getElementById('prev-btn'); // Tombol halaman sebelumnya
   const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
-  const cardsPerPage = 8; // Jumlah kartu per halaman
+  const cardsPerPage = 4; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
-
-  // Ambil data tugas dari Firestore
-  const allTasks = await getTasks();
 
   // Fungsi untuk merender kartu tugas
   const renderCards = () => {
     container.innerHTML = ''; // Bersihkan kartu sebelumnya
     const start = currentPage * cardsPerPage;
     const end = start + cardsPerPage;
-    const visibleTasks = allTasks.slice(start, end);
+    const visibleTasks = staticTasks.slice(start, end);
 
-    visibleTasks.forEach((task, index) => {
+    visibleTasks.forEach((task) => {
       const card = document.createElement('div');
-      card.className = 'card game-card'; // Tambahkan class game-card untuk event click
-      card.dataset.game = index % 2 === 0 ? 'game1' : 'game2'; // Contoh data-game (game1/game2)
+      card.className = 'card game-card';
       card.innerHTML = `
         <img src="${task.img}" alt="Badge">
         <h3>${task.title}</h3>
-        <a href="#" class="read-btn">Pelajari</a>
+        <a href="${task.link}" class="read-btn">Pelajari</a>
       `;
       container.appendChild(card);
     });
 
     // Perbarui status tombol pagination
     prevBtn.disabled = currentPage === 0;
-    nextBtn.disabled = currentPage >= Math.ceil(allTasks.length / cardsPerPage) - 1;
-
-    // Tambahkan event click untuk game-card
-    const gameCards = document.querySelectorAll('.game-card');
-    gameCards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        const game = card.dataset.game; // Ambil nilai data-game
-
-        // Redirect ke halaman sesuai dengan game
-        if (game === "game1") {
-          window.location.href = "game1.html";
-        } else if (game === "game2") {
-          window.location.href = "game2.html";
-        }
-      });
-    });
+    nextBtn.disabled = currentPage >= Math.ceil(staticTasks.length / cardsPerPage) - 1;
   };
 
   // Event untuk tombol halaman sebelumnya
@@ -122,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Event untuk tombol halaman berikutnya
   nextBtn.addEventListener('click', () => {
-    if (currentPage < Math.ceil(allTasks.length / cardsPerPage) - 1) {
+    if (currentPage < Math.ceil(staticTasks.length / cardsPerPage) - 1) {
       currentPage++;
       renderCards();
     }
@@ -130,4 +72,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Render awal kartu tugas
   renderCards();
+
+  // Simpan data pemain contoh ke Firebase (contoh statis, bisa disesuaikan dengan input pengguna)
+  const samplePlayer = {
+    id: "12345",
+    name: "Pemain 1",
+    level: 10,
+    xp: 2500,
+    tokens: 100,
+    lives: 3,
+    badges: ["badge1", "badge2"],
+    certificates: ["cert1"],
+    history: ["game1", "game2"]
+  };
+
+  // Tambahkan data pemain ke Firebase
+  addPlayerData(samplePlayer);
 });

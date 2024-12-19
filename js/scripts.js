@@ -90,29 +90,32 @@ const staticTasks = [
   addPlayerData(samplePlayer);
 });
 
-document.getElementById('submit-answers').addEventListener('click', async () => {
-  const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
-  const taskId = 'ProjectManagement';
-  const playerId = localStorage.getItem('playerId') || ''; // Atau sesuai dengan cara Anda mendapatkan ID pemain
-
-  // Validasi jawaban
-  if (await validateAnswers()) {
-    try {
-      // Simpan jawaban ke Firebase
-      await addDoc(collection(db, 'task_results'), {
-        playerId,
-        taskId,
-        answers,
-        timestamp: new Date(),
-      });
-      alert('Semua jawaban benar! Lanjutkan ke tugas berikutnya.');
-      window.location.href = 'task2.html';
-    } catch (error) {
-      console.error('Gagal menyimpan jawaban:', error);
-    }
-  } else {
-    alert('Jawaban Anda belum benar. Coba lagi.');
-  }
+document.getElementById('submit-answer1').addEventListener('click', function() {
+    checkAnswer('answer1', this, 'fase pertama');
 });
 
-document.addEventListener('DOMContentLoaded', loadTaskData);
+document.getElementById('submit-answer2').addEventListener('click', function() {
+    checkAnswer('answer2', this, 'risiko');
+});
+
+document.getElementById('submit-answer3').addEventListener('click', function() {
+    checkAnswer('answer3', this, 'Gantt Chart');
+});
+
+function checkAnswer(inputId, button, correctAnswer) {
+    const userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
+
+    if (userAnswer === correctAnswer.toLowerCase()) {
+        button.classList.add('correct');
+        button.textContent = 'Benar';
+    } else {
+        button.classList.add('incorrect');
+        button.textContent = 'Salah';
+        setTimeout(() => {
+            button.classList.remove('incorrect');
+            button.classList.add('neutral');
+            button.textContent = 'Submit Jawaban';
+        }, 1000);
+    }
+}
+

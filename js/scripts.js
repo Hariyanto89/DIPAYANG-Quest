@@ -90,21 +90,6 @@ const staticTasks = [
   addPlayerData(samplePlayer);
 });
 
-const validateAnswers = async () => {
-  try {
-    const response = await fetch('data/ProjectManagement.json');
-    if (!response.ok) throw new Error('Gagal mengakses file JSON');
-    const data = await response.json();
-    const correctAnswers = data.answers;
-    const userAnswers = [...document.querySelectorAll('.question input')].map(input => input.value);
-
-    return correctAnswers.every((answer, index) => answer === userAnswers[index]);
-  } catch (error) {
-    console.error('Error validating answers:', error);
-    return false; // Kembalikan false jika terjadi error
-  }
-};
-
 document.getElementById('submit-answers').addEventListener('click', async () => {
   const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
   const taskId = 'ProjectManagement';
@@ -129,33 +114,5 @@ document.getElementById('submit-answers').addEventListener('click', async () => 
     alert('Jawaban Anda belum benar. Coba lagi.');
   }
 });
-
-// Mengambil data tugas dari JSON
-const loadTaskData = async () => {
-  const response = await fetch('data/ProjectManagement.json');
-  const taskData = await response.json();
-
-  // Mengisi data tugas di halaman
-  document.getElementById('task-title').textContent = taskData.taskTitle;
-  document.getElementById('task-description').textContent = taskData.description;
-  document.getElementById('task-hint').src = taskData.hintImage || '';
-
-  // Menambahkan pertanyaan ke halaman
-  const questionsContainer = document.getElementById('questions-container');
-  taskData.questions.forEach((question, index) => {
-    const questionElement = document.createElement('div');
-    questionElement.classList.add('question');
-    questionElement.innerHTML = `
-      <p>${question.question}</p>
-      ${question.options.map(option => `
-        <label>
-          <input type="radio" name="question${index}" value="${option}">
-          ${option}
-        </label>
-      `).join('')}
-    `;
-    questionsContainer.appendChild(questionElement);
-  });
-};
 
 document.addEventListener('DOMContentLoaded', loadTaskData);

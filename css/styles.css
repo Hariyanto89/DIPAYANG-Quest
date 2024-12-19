@@ -142,6 +142,7 @@ main {
    font-family: 'Arial', sans-serif;
    font-weight: normal;
     text-align: justify;
+    align-items: center;
 }
 
 .task-container img {
@@ -149,6 +150,11 @@ main {
   max-width: 150px;
   height: auto;
   margin: 10px 0;
+}
+
+.task-container .text {
+  flex-grow: 1;  /* Memastikan teks mengisi ruang yang tersisa */
+  text-align: justify;  /* Teks rata kiri dan kanan */
 }
 
 .questions {

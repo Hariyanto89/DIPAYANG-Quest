@@ -42,8 +42,6 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
-const allTasks = (await getTasks()).length ? await getTasks() : sampleTasks;
-
 card.querySelector('.read-btn').addEventListener('click', (e) => {
     e.preventDefault();
     alert(`Anda memilih tugas: ${task.title}`);

@@ -2,6 +2,7 @@
 import { db, auth, loginWithEmailPassword, fetchQuestions, updatePlayerProgress } from './firebase.js';
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+// Event untuk signup
 document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('signup-name').value;
@@ -23,6 +24,7 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
     }
 });
 
+// Switcher antara login dan signup
 document.getElementById('switch-to-signup')?.addEventListener('click', () => {
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('signup-section').style.display = 'block';
@@ -33,6 +35,7 @@ document.getElementById('switch-to-login')?.addEventListener('click', () => {
     document.getElementById('login-section').style.display = 'block';
 });
 
+// State Auth untuk login/logout
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log("User logged in:", user.uid);
@@ -40,11 +43,10 @@ auth.onAuthStateChanged((user) => {
     } else {
         console.log("No user logged in.");
         document.getElementById('player-id').textContent = '-';
-        alert('Anda telah logout.');
     }
 });
 
-// Fungsi untuk menambah tugas ke Firestore
+// Fungsi menambah tugas
 const addTask = async (task) => {
     try {
         await addDoc(collection(db, "tasks"), task);
@@ -54,7 +56,7 @@ const addTask = async (task) => {
     }
 };
 
-// Fungsi untuk mengambil data tugas dari Firestore
+// Fungsi mengambil tugas dari Firestore
 const getTasks = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, "tasks"));
@@ -65,43 +67,14 @@ const getTasks = async () => {
     }
 };
 
-// Inisialisasi data tugas contoh (hanya digunakan untuk pengisian awal)
+// Data tugas contoh
 const sampleTasks = [
-        { img: "assets/icon/gamechapter1.jpg", title: "Petani Aseters" },
-        { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani" },
-        { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge2.png", title: "Judul Tugas 2" },
-        { img: "assets/badges/merigi_badge3.png", title: "Judul Tugas 3" },
-        { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4" },
-        { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5" },
-        { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" },
-        { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7" },
-        { img: "assets/badges/merigi_badge.png", title: "Petani Aseters" }
+    { img: "assets/icon/gamechapter1.jpg", title: "Petani Aseters" },
+    { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani" },
+    { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani" },
 ];
 
-// Event DOMContentLoaded untuk menjalankan kode setelah halaman dimuat
+// Rendering kartu tugas
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.querySelector('.card-container');
     const prevBtn = document.getElementById('prev-btn');
@@ -111,8 +84,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Ambil data tugas dari Firestore
     const allTasks = await getTasks();
+    if (allTasks.length === 0) {
+        allTasks.push(...sampleTasks);
+    }
 
-    // Fungsi untuk merender kartu tugas
     const renderCards = () => {
         container.innerHTML = '';
         const start = currentPage * cardsPerPage;
@@ -138,6 +113,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         gameCards.forEach(card => {
             card.addEventListener('click', (e) => {
                 const game = card.dataset.game;
+                if (!auth.currentUser) {
+                    alert("Silakan login untuk bermain.");
+                    window.location.href = 'login.html';
+                    return;
+                }
+
                 if (game === "game1") {
                     window.location.href = "game1.html";
                 } else if (game === "game2") {
@@ -164,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCards();
 });
 
-// Login event handling
+// Login form
 document.getElementById('login-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -179,7 +160,7 @@ document.getElementById('login-form')?.addEventListener('submit', async (e) => {
     }
 });
 
-// Logout event handling
+// Logout button
 document.getElementById('logout-btn')?.addEventListener('click', () => {
     auth.signOut();
     alert('Logout berhasil!');
@@ -195,16 +176,3 @@ export const loginWithEmailPassword = async (email, password) => {
         return null;
     }
 };
-
-console.log("Auth:", auth);
-console.log("DB:", db);
-
-document.addEventListener('DOMContentLoaded', async () => {
-    if (!auth.currentUser) {
-        alert('Silakan login terlebih dahulu.');
-        window.location.href = 'login.html';
-    } else {
-        console.log('User is authenticated:', auth.currentUser.uid);
-        // Render tasks or other data
-    }
-});

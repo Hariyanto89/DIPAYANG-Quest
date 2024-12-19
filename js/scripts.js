@@ -103,11 +103,14 @@ document.getElementById('submit-answer3').addEventListener('click', function() {
 });
 
 function checkAnswer(inputId, button, correctAnswer) {
-    const userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
+    const inputField = document.getElementById(inputId);
+    const userAnswer = inputField.value.trim().toLowerCase();
 
     if (userAnswer === correctAnswer.toLowerCase()) {
         button.classList.add('correct');
         button.textContent = 'Benar';
+        button.disabled = true; // Nonaktifkan tombol
+        inputField.disabled = true; // Nonaktifkan input
     } else {
         button.classList.add('incorrect');
         button.textContent = 'Salah';
@@ -118,4 +121,3 @@ function checkAnswer(inputId, button, correctAnswer) {
         }, 1000);
     }
 }
-

@@ -161,21 +161,21 @@ document.getElementById('submit-answer3').addEventListener('click', function() {
 });
 
 document.getElementById('submit-answer4').addEventListener('click', function() {
-    checkAnswer('answer1', this, 'SMART');
+    checkAnswer('answer4', this, 'SMART');
 });
 
 document.getElementById('submit-answer5').addEventListener('click', function() {
-    checkAnswer('answer2', this, 'WBS');
+    checkAnswer('answer5', this, 'WBS');
 });
 
 document.getElementById('submit-answer6').addEventListener('click', function() {
-    checkAnswer('answer3', this, 'Gantt Chart');
+    checkAnswer('answer6', this, 'Gantt Chart');
 });
 
 document.getElementById('submit-answer7').addEventListener('click', function() {
-    checkAnswer('answer2', this, 'Tenaga kerja');
+    checkAnswer('answer7', this, 'Tenaga kerja');
 });
 
 document.getElementById('submit-answer8').addEventListener('click', function() {
-    checkAnswer('answer3', this, 'Risk Management Plan');
+    checkAnswer('answer8', this, 'Risk Management Plan');
 });

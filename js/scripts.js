@@ -159,3 +159,23 @@ document.getElementById('submit-answer2').addEventListener('click', function() {
 document.getElementById('submit-answer3').addEventListener('click', function() {
     checkAnswer('answer3', this, 'Gantt Chart');
 });
+
+document.getElementById('submit-answer4').addEventListener('click', function() {
+    checkAnswer('answer1', this, 'SMART');
+});
+
+document.getElementById('submit-answer5').addEventListener('click', function() {
+    checkAnswer('answer2', this, 'WBS');
+});
+
+document.getElementById('submit-answer6').addEventListener('click', function() {
+    checkAnswer('answer3', this, 'Gantt Chart');
+});
+
+document.getElementById('submit-answer7').addEventListener('click', function() {
+    checkAnswer('answer2', this, 'Tenaga kerja');
+});
+
+document.getElementById('submit-answer8').addEventListener('click', function() {
+    checkAnswer('answer3', this, 'Risk Management Plan');
+});

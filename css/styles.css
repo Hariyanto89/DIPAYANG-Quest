@@ -128,6 +128,23 @@ main {
     transform: scale(1.05);
 }
 
+.task-container {
+    flex: 2; /* Sama dengan card-container */
+    background-color: #f0f0f0; /* Pastikan warnanya konsisten */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.task-container, .card-container {
+    height: 100%; /* Atau auto jika ingin menyesuaikan konten */
+}
+
 /* Tombol navigasi */
 .navigation-buttons {
     display: flex;

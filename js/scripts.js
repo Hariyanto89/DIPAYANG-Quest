@@ -90,30 +90,6 @@ const staticTasks = [
   addPlayerData(samplePlayer);
 });
 
-document.getElementById('submit-answers').addEventListener('click', async () => {
-  const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
-  const taskId = 'task1'; // Sesuaikan ID tugas
-  const playerId = 'player123'; // ID pemain dari sesi
-  
-  try {
-    await addDoc(collection(db, 'task_results'), {
-      playerId,
-      taskId,
-      answers,
-      timestamp: new Date(),
-    });
-    alert('Jawaban disimpan. Lanjutkan ke tugas berikutnya.');
-    window.location.href = 'task2.html'; // Navigasi ke tugas berikutnya
-  } catch (error) {
-    console.error('Gagal menyimpan jawaban:', error);
-  }
-});
-
-// task1.json
-{
-  "answers": ["jawaban1", "jawaban2"]
-}
-
 const validateAnswers = async () => {
   const response = await fetch('task1.json');
   const data = await response.json();
@@ -124,10 +100,27 @@ const validateAnswers = async () => {
 };
 
 document.getElementById('submit-answers').addEventListener('click', async () => {
+  const answers = [...document.querySelectorAll('.question input')].map(input => input.value);
+  const taskId = 'task1';
+  const playerId = 'player123';
+
+  // Validasi jawaban
   if (await validateAnswers()) {
-    alert('Semua jawaban benar! Lanjutkan ke tugas berikutnya.');
-    window.location.href = 'task2.html';
+    try {
+      // Simpan jawaban ke Firebase
+      await addDoc(collection(db, 'task_results'), {
+        playerId,
+        taskId,
+        answers,
+        timestamp: new Date(),
+      });
+      alert('Semua jawaban benar! Lanjutkan ke tugas berikutnya.');
+      window.location.href = 'task2.html';
+    } catch (error) {
+      console.error('Gagal menyimpan jawaban:', error);
+    }
   } else {
     alert('Jawaban Anda belum benar. Coba lagi.');
   }
 });
+

@@ -1,7 +1,7 @@
 // firebase.js
 // Mengimpor modul Firebase dari CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getFirestore, collection, doc, updateDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -46,16 +46,26 @@ export { db, storage, auth };
 
 // Fungsi untuk mengambil semua pertanyaan dari Firestore
 export const fetchQuestions = async () => {
-  const querySnapshot = await getDocs(collection(db, "Questions"));
-  let questions = [];
-  querySnapshot.forEach((doc) => {
-    questions.push(doc.data());
-  });
-  return questions;
+  try {
+    const querySnapshot = await getDocs(collection(db, "Questions"));
+    let questions = [];
+    querySnapshot.forEach((doc) => {
+      questions.push(doc.data());
+    });
+    return questions;
+  } catch (error) {
+    console.error("Gagal mengambil pertanyaan:", error);
+    return [];
+  }
 };
 
 // Fungsi untuk memperbarui progress pemain
 export const updatePlayerProgress = async (userId, progress) => {
-  const userDocRef = doc(db, "Users", userId);
-  await updateDoc(userDocRef, progress);
+  try {
+    const userDocRef = doc(db, "Users", userId);
+    await updateDoc(userDocRef, progress);
+    console.log("Progress pemain berhasil diperbarui");
+  } catch (error) {
+    console.error("Gagal memperbarui progress pemain:", error);
+  }
 };

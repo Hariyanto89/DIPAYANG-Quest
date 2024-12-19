@@ -141,10 +141,6 @@ main {
     overflow: hidden;
 }
 
-.task-container, .card-container {
-    height: 100%; /* Atau auto jika ingin menyesuaikan konten */
-}
-
 /* Tombol navigasi */
 .navigation-buttons {
     display: flex;

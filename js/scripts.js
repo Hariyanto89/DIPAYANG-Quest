@@ -1,16 +1,102 @@
 // Import Firestore dari firebase.js
-import { db } from './firebase.js'; // Mengimpor konfigurasi Firebase
+import { auth, db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
 
-// Fungsi untuk menambah data pemain ke Firestore
-const addPlayerData = async (player) => {
-  try {
-    await addDoc(collection(db, "players"), player);
-    console.log(`Data pemain "${player.name}" berhasil ditambahkan.`);
-  } catch (error) {
-    console.error("Gagal menambahkan data pemain:", error);
-  }
-};
+// Menangani login dengan Google
+const googleLoginBtn = document.getElementById('google-login-btn');
+googleLoginBtn.addEventListener('click', async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    
+    try {
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        // Simpan data user ke Firestore jika belum ada
+        const userRef = db.collection('players').doc(user.uid);
+        const doc = await userRef.get();
+
+        if (!doc.exists) {
+            await userRef.set({
+                name: user.displayName,
+                email: user.email,
+                level: 1,
+                xp: 0,
+                tokens: 0,
+                lives: 3,
+                badges: [],
+                certificates: [],
+                gameHistory: []
+            });
+        }
+
+        // Menampilkan data pemain
+        displayPlayerData(user.uid);
+    } catch (error) {
+        console.error('Error signing in with Google: ', error);
+    }
+});
+
+async function updatePlayerProgress(playerId, xpGained, tokensGained) {
+    const playerRef = db.collection('players').doc(playerId);
+    const doc = await playerRef.get();
+
+    if (doc.exists) {
+        const playerData = doc.data();
+        let newXp = playerData.xp + xpGained;
+        let newTokens = playerData.tokens + tokensGained;
+        let newLevel = Math.floor(newXp / 1000) + 1;
+        
+        // Update data progres
+        await playerRef.update({
+            xp: newXp,
+            tokens: newTokens,
+            level: newLevel
+        });
+
+        // Tambahkan ke riwayat permainan
+        await playerRef.update({
+            gameHistory: firebase.firestore.FieldValue.arrayUnion(`Gained ${xpGained} XP and ${tokensGained} tokens`)
+        });
+
+        displayPlayerData(playerId); // Update UI
+    }
+}
+
+// Menampilkan data pemain
+async function displayPlayerData(playerId) {
+    const playerRef = db.collection('players').doc(playerId);
+    const doc = await playerRef.get();
+    
+    if (doc.exists) {
+        const playerData = doc.data();
+        
+        // Update UI dengan data pemain
+        document.getElementById('player-id').textContent = playerId;
+        document.getElementById('player-name').textContent = playerData.name;
+        document.getElementById('player-level').textContent = playerData.level;
+        document.getElementById('player-xp').textContent = `${playerData.xp}/1000`;
+        document.getElementById('player-tokens').textContent = playerData.tokens;
+        document.getElementById('player-lives').textContent = '❤️'.repeat(playerData.lives);
+
+        // Menampilkan badge dan sertifikat
+        const badgesList = document.getElementById('badges-list');
+        badgesList.innerHTML = playerData.badges.map(badge => `<div class="badge">${badge}</div>`).join('');
+
+        const certificatesList = document.getElementById('certificates-list');
+        certificatesList.innerHTML = playerData.certificates.map(cert => `<div class="certificate">${cert}</div>`).join('');
+
+        // Menampilkan riwayat permainan
+        const gameHistory = document.getElementById('game-history');
+        gameHistory.innerHTML = playerData.gameHistory.map(item => `<div class="history-item">${item}</div>`).join('');
+    }
+}
+
+// Logout
+const logoutBtn = document.getElementById('logout-btn');
+logoutBtn.addEventListener('click', async () => {
+    await auth.signOut();
+    window.location.reload();
+});
 
 // Event DOMContentLoaded untuk menjalankan kode setelah halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
@@ -73,22 +159,6 @@ const staticTasks = [
   // Render awal kartu tugas
   renderCards();
 
-  // Simpan data pemain contoh ke Firebase (contoh statis, bisa disesuaikan dengan input pengguna)
-  const samplePlayer = {
-    id: "12345",
-    name: "Pemain 1",
-    level: 10,
-    xp: 2500,
-    tokens: 100,
-    lives: 3,
-    badges: ["badge1", "badge2"],
-    certificates: ["cert1"],
-    history: ["game1", "game2"]
-  };
-
-  // Tambahkan data pemain ke Firebase
-  addPlayerData(samplePlayer);
-});
 
 // Total jumlah pertanyaan di halaman ini
 const totalQuestions = document.querySelectorAll('.question').length;

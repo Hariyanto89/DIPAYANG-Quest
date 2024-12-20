@@ -1,22 +1,22 @@
 // Import Firestore dari firebase.js
 import { auth, db } from './firebase.js'; // Mengimpor konfigurasi Firebase
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore
+import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore yang benar
 
 // Menangani login dengan Google
 const googleLoginBtn = document.getElementById('google-login-btn');
 googleLoginBtn.addEventListener('click', async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    
+
     try {
         const result = await auth.signInWithPopup(provider);
         const user = result.user;
-        
-        // Simpan data user ke Firestore jika belum ada
-        const userRef = db.collection('players').doc(user.uid);
-        const doc = await userRef.get();
 
-        if (!doc.exists) {
-            await userRef.set({
+        // Simpan data user ke Firestore jika belum ada
+        const userRef = doc(db, 'players', user.uid); // Menyimpan data di koleksi 'players' dengan ID dokumen menggunakan UID pengguna
+        const docSnapshot = await getDoc(userRef); // Mengambil dokumen untuk memeriksa apakah sudah ada data pemain
+
+        if (!docSnapshot.exists()) {
+            await setDoc(userRef, {
                 name: user.displayName,
                 email: user.email,
                 level: 1,
@@ -37,25 +37,25 @@ googleLoginBtn.addEventListener('click', async () => {
 });
 
 async function updatePlayerProgress(playerId, xpGained, tokensGained) {
-    const playerRef = db.collection('players').doc(playerId);
-    const doc = await playerRef.get();
+    const playerRef = doc(db, 'players', playerId);
+    const docSnapshot = await getDoc(playerRef);
 
-    if (doc.exists) {
-        const playerData = doc.data();
+    if (docSnapshot.exists()) {
+        const playerData = docSnapshot.data();
         let newXp = playerData.xp + xpGained;
         let newTokens = playerData.tokens + tokensGained;
         let newLevel = Math.floor(newXp / 1000) + 1;
-        
+
         // Update data progres
-        await playerRef.update({
+        await updateDoc(playerRef, {
             xp: newXp,
             tokens: newTokens,
             level: newLevel
         });
 
         // Tambahkan ke riwayat permainan
-        await playerRef.update({
-            gameHistory: firebase.firestore.FieldValue.arrayUnion(`Gained ${xpGained} XP and ${tokensGained} tokens`)
+        await updateDoc(playerRef, {
+            gameHistory: arrayUnion(`Gained ${xpGained} XP and ${tokensGained} tokens`)
         });
 
         displayPlayerData(playerId); // Update UI
@@ -64,12 +64,12 @@ async function updatePlayerProgress(playerId, xpGained, tokensGained) {
 
 // Menampilkan data pemain
 async function displayPlayerData(playerId) {
-    const playerRef = db.collection('players').doc(playerId);
-    const doc = await playerRef.get();
-    
-    if (doc.exists) {
-        const playerData = doc.data();
-        
+    const playerRef = doc(db, 'players', playerId);
+    const docSnapshot = await getDoc(playerRef);
+
+    if (docSnapshot.exists()) {
+        const playerData = docSnapshot.data();
+
         // Update UI dengan data pemain
         document.getElementById('player-id').textContent = playerId;
         document.getElementById('player-name').textContent = playerData.name;
@@ -106,39 +106,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardsPerPage = 8; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
   
-// Inisialisasi data tugas statis
-const staticTasks = [
-  { img: "assets/icon/projectmanagement.png", title: "Project Management", link: "https://hariyanto89.github.io/Quest.ID/tasks/project-management-task1.html" },
-  { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani", link: "game2.html" },
-  { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani", link: "game3.html" },
-  { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4", link: "game4.html" },
-  { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5", link: "game5.html" },
-  { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6", link: "game6.html" },
-  { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" },
-];
+  // Inisialisasi data tugas statis
+  const staticTasks = [
+    { img: "assets/icon/projectmanagement.png", title: "Project Management", link: "https://hariyanto89.github.io/Quest.ID/tasks/project-management-task1.html" },
+    { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani", link: "game2.html" },
+    { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani", link: "game3.html" },
+    { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4", link: "game4.html" },
+    { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5", link: "game5.html" },
+    { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6", link: "game6.html" },
+    { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" },
+  ];
 
   // Fungsi untuk merender kartu tugas
-const renderCards = () => {
-  container.innerHTML = ''; // Bersihkan kartu sebelumnya
-  const start = currentPage * cardsPerPage;
-  const end = start + cardsPerPage;
-  const visibleTasks = staticTasks.slice(start, end);
+  const renderCards = () => {
+    container.innerHTML = ''; // Bersihkan kartu sebelumnya
+    const start = currentPage * cardsPerPage;
+    const end = start + cardsPerPage;
+    const visibleTasks = staticTasks.slice(start, end);
 
-  visibleTasks.forEach((task) => {
-    const card = document.createElement('div');
-    card.className = 'card game-card';
-    card.innerHTML = `
-      <img src="${task.img}" alt="Badge">
-      <h3>${task.title}</h3>
-      <a href="${task.link}" class="read-btn">Pelajari</a>
-    `;
-    container.appendChild(card);
-  });
+    visibleTasks.forEach((task) => {
+      const card = document.createElement('div');
+      card.className = 'card game-card';
+      card.innerHTML = `
+        <img src="${task.img}" alt="Badge">
+        <h3>${task.title}</h3>
+        <a href="${task.link}" class="read-btn">Pelajari</a>
+      `;
+      container.appendChild(card);
+    });
 
-  // Perbarui status tombol pagination
-  prevBtn.disabled = currentPage === 0;
-  nextBtn.disabled = currentPage >= Math.ceil(staticTasks.length / cardsPerPage) - 1;
-};
+    // Perbarui status tombol pagination
+    prevBtn.disabled = currentPage === 0;
+    nextBtn.disabled = currentPage >= Math.ceil(staticTasks.length / cardsPerPage) - 1;
+  };
 
   // Event untuk tombol halaman sebelumnya
   prevBtn.addEventListener('click', () => {
@@ -158,7 +158,7 @@ const renderCards = () => {
 
   // Render awal kartu tugas
   renderCards();
-
+});
 
 // Total jumlah pertanyaan di halaman ini
 const totalQuestions = document.querySelectorAll('.question').length;

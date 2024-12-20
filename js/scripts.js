@@ -118,27 +118,27 @@ const staticTasks = [
 ];
 
   // Fungsi untuk merender kartu tugas
-  const renderCards = () => {
-    container.innerHTML = ''; // Bersihkan kartu sebelumnya
-    const start = currentPage * cardsPerPage;
-    const end = start + cardsPerPage;
-    const visibleTasks = staticTasks.slice(start, end);
+const renderCards = () => {
+  container.innerHTML = ''; // Bersihkan kartu sebelumnya
+  const start = currentPage * cardsPerPage;
+  const end = start + cardsPerPage;
+  const visibleTasks = staticTasks.slice(start, end);
 
-    visibleTasks.forEach((task) => {
-      const card = document.createElement('div');
-      card.className = 'card game-card';
-      card.innerHTML = `
-        <img src="${task.img}" alt="Badge">
-        <h3>${task.title}</h3>
-        <a href="${task.link}" class="read-btn">Pelajari</a>
-      `;
-      container.appendChild(card);
-    });
+  visibleTasks.forEach((task) => {
+    const card = document.createElement('div');
+    card.className = 'card game-card';
+    card.innerHTML = `
+      <img src="${task.img}" alt="Badge">
+      <h3>${task.title}</h3>
+      <a href="${task.link}" class="read-btn">Pelajari</a>
+    `;
+    container.appendChild(card);
+  });
 
-    // Perbarui status tombol pagination
-    prevBtn.disabled = currentPage === 0;
-    nextBtn.disabled = currentPage >= Math.ceil(staticTasks.length / cardsPerPage) - 1;
-  };
+  // Perbarui status tombol pagination
+  prevBtn.disabled = currentPage === 0;
+  nextBtn.disabled = currentPage >= Math.ceil(staticTasks.length / cardsPerPage) - 1;
+};
 
   // Event untuk tombol halaman sebelumnya
   prevBtn.addEventListener('click', () => {

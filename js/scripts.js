@@ -1,5 +1,5 @@
 // Import Firestore dari firebase.js
-import { auth, db } from './firebase.js'; // Mengimpor konfigurasi Firebase
+import { auth, db } from './js/firebase.js'; // Mengimpor konfigurasi Firebase
 import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore yang benar
 
 document.getElementById('switch-to-signup').addEventListener('click', function(e) {

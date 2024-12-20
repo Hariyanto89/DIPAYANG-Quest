@@ -2,6 +2,18 @@
 import { auth, db } from './firebase.js'; // Mengimpor konfigurasi Firebase
 import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"; // Metode Firestore yang benar
 
+document.getElementById('switch-to-signup').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('signup-section').style.display = 'block';
+});
+
+document.getElementById('switch-to-login').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('signup-section').style.display = 'none';
+    document.getElementById('login-section').style.display = 'block';
+});
+
 // Menangani login dengan Google
 const googleLoginBtn = document.getElementById('google-login-btn');
 googleLoginBtn.addEventListener('click', async () => {

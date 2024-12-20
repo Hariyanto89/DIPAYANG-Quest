@@ -223,6 +223,14 @@ function goToNextTask() {
 
     if (taskNumberMatch) {
         const currentTaskNumber = parseInt(taskNumberMatch[1], 10);
+
+// Fungsi untuk beralih ke laman berikutnya
+function goToNextTask() {
+    const currentUrl = window.location.href;
+    const taskNumberMatch = currentUrl.match(/task(\d+)/);
+
+    if (taskNumberMatch) {
+        const currentTaskNumber = parseInt(taskNumberMatch[1], 10);
         const nextTaskNumber = currentTaskNumber + 1;
         const nextUrl = currentUrl.replace(`task${currentTaskNumber}`, `task${nextTaskNumber}`);
         window.location.href = nextUrl;

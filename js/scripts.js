@@ -112,7 +112,7 @@ logoutBtn.addEventListener('click', async () => {
 
 // Event DOMContentLoaded untuk menjalankan kode setelah halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.card-container'); // Kontainer kartu tugas
+  const container = document.getElementById('.card-container'); // Kontainer kartu tugas
   const prevBtn = document.getElementById('prev-btn'); // Tombol halaman sebelumnya
   const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
   const cardsPerPage = 8; // Jumlah kartu per halaman
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4", link: "game4.html" },
     { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5", link: "game5.html" },
     { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6", link: "game6.html" },
-    { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" },
+    { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" }
   ];
 
   // Fungsi untuk merender kartu tugas

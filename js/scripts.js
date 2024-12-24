@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { img: "assets/badges/merigi_badge4.png", title: "Judul Tugas 4", link: "game4.html" },
     { img: "assets/badges/merigi_badge5.png", title: "Judul Tugas 5", link: "game5.html" },
     { img: "assets/badges/merigi_badge6.png", title: "Judul Tugas 6", link: "game6.html" },
-    { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" },
+    { img: "assets/badges/merigi_badge7.png", title: "Judul Tugas 7", link: "game7.html" }
   ];
 
   // Fungsi untuk merender kartu tugas

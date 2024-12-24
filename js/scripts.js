@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPage = 0; // Halaman saat ini dimulai dari 0
   
   // Inisialisasi data tugas statis
-  const sampleTasks = [
+  const staticTasks = [
     { img: "assets/icon/projectmanagement.png", title: "Project Management", link: "https://hariyanto89.github.io/Quest.ID/tasks/project-management-task1.html" },
     { img: "assets/icon/gamechapter2.jpg", title: "Gelombang Aset Tani", link: "game2.html" },
     { img: "assets/icon/gamechapter3.jpg", title: "Menghias Aset Tani", link: "game3.html" },

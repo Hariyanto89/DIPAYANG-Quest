@@ -64,7 +64,6 @@ main {
     border-radius: 8px;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Menampilkan 4 kolom kartu */
     gap: 15px;
     margin-bottom: 20px;
 }

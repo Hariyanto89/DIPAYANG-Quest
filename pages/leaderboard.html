@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="QUEST ID">
+    <title>Project Management</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="../js/firebase.js"></script> <!-- Konfigurasi Firebase -->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/icon/QUEST.ID.png" type="image/png">
+</head>
+<body>
+    <header>
+        <h1>Project Management</h1>
+        <nav class="menu-card">
+            <a href="https://hariyanto89.github.io/Quest.ID/" class="menu-item" aria-label="Beranda">🏡</a>
+            <a href="#" class="menu-item" aria-label="Leaderboard">📊</a>
+            <a href="#" class="menu-item" aria-label="Profil">📲</a>
+            <a href="#" class="menu-item" aria-label="Toko">💰</a>
+            <a href="#" class="menu-item" aria-label="Berita">📰</a>
+            <a href="#" class="menu-item" aria-label="Komunitas">🌏</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section Konten Dinamis -->
+         <section class="task-container" id="task-container">
+                <h1>Pengenalan Manajemen Proyek</h1>
+              <img src="../assets/icon/projectmanagement.png" alt="Petunjuk">
+             <div class="text">
+                <p>Manajemen proyek adalah suatu disiplin yang terorganisir yang bertujuan untuk merencanakan, melaksanakan, dan mengendalikan suatu proyek agar tujuan yang telah ditentukan dapat tercapai dengan sukses. Proyek sendiri
+                    dapat didefinisikan sebagai serangkaian aktivitas yang memiliki tujuan khusus, dimulai dengan perencanaan dan berakhir dengan pencapaian hasil. Manajemen proyek mencakup serangkaian kegiatan yang terkoordinasi dan
+                    terkendali untuk memastikan proyek berjalan sesuai dengan jadwal, anggaran, dan kualitas yang diinginkan.<br>
+                    Setiap proyek memiliki siklus hidup yang terdiri dari beberapa fase, yang umumnya meliputi inisiasi, perencanaan, pelaksanaan, pengendalian, dan penutupan. Di fase inisiasi, proyek mendapatkan persetujuan dan disetujui
+                    untuk dimulai. Pada fase perencanaan, tujuan, anggaran, dan sumber daya yang diperlukan diidentifikasi, serta jadwal disusun. Pelaksanaan adalah fase di mana aktivitas utama proyek dilakukan, dan hasil mulai terlihat.
+                    Fase pengendalian melibatkan pemantauan progres proyek untuk memastikan bahwa semuanya berjalan sesuai rencana. Terakhir, fase penutupan menandai selesainya proyek, di mana hasilnya dievaluasi dan dokumen proyek
+                    diselesaikan.<br>
+                    Salah satu peran utama seorang manajer proyek adalah memastikan bahwa proyek dilaksanakan sesuai dengan tujuan yang telah ditetapkan, dengan memanfaatkan sumber daya yang ada secara efisien. Manajer proyek bertanggung
+                    jawab untuk memimpin tim, mengelola komunikasi, serta mengambil keputusan strategis untuk mengatasi masalah atau hambatan yang muncul selama proses proyek. Dengan demikian, kemampuan dalam komunikasi, perencanaan, dan
+                    pengambilan keputusan yang tepat sangat diperlukan dalam peran ini.<br>
+                    Untuk mencapai kesuksesan dalam manajemen proyek, penting bagi manajer proyek untuk mengelola risiko dengan baik. Risiko dalam proyek bisa muncul dari berbagai aspek, seperti keterlambatan jadwal, masalah teknis,
+                    atau perubahan yang tidak terduga dari klien atau stakeholder. Oleh karena itu, manajer proyek harus mampu membuat rencana mitigasi risiko untuk mengurangi dampak negatif yang mungkin terjadi. Proses ini termasuk
+                    mengidentifikasi risiko sejak dini dan merencanakan solusi untuk menghadapinya.<br>
+                    Manajemen proyek juga tidak hanya berlaku di sektor bisnis atau industri besar. Banyak proyek kecil, seperti pembangunan website, pengorganisasian acara, atau peluncuran produk, juga memerlukan pendekatan
+                    manajerial yang sama. Dengan menggunakan alat bantu seperti Gantt Chart, Work Breakdown Structure (WBS), dan perangkat manajemen proyek lainnya, manajer proyek dapat lebih mudah merencanakan, memantau, dan
+                    mengendalikan jalannya proyek. Kemampuan untuk mengelola proyek dengan baik akan membantu individu atau organisasi untuk mencapai hasil yang optimal dengan sumber daya yang terbatas.</p>
+             </div>
+                     <div class="questions">
+                        <div class="question">
+                            <p>Apa prinsip yang digunakan dalam menetapkan tujuan proyek?</p>
+                            <input type="text" placeholder="Jawaban Anda" id="answer1">
+                            <button class="submit-answer" id="submit-answer1" data-correct-answer="inisiasi">Submit Jawaban</button>
+                        </div>
+                        <div class="question">
+                            <p>Apa alat untuk memecah proyek menjadi tugas kecil?</p>
+                            <input type="text" placeholder="Jawaban Anda" id="answer2">
+                            <button class="submit-answer" id="submit-answer2" data-correct-answer="risiko">Submit Jawaban</button>
+                        </div>
+                        <div class="question">
+                            <p>Apa alat bantu untuk membuat jadwal proyek?</p>
+                            <input type="text" placeholder="Jawaban Anda" id="answer3">
+                            <button class="submit-answer" id="submit-answer3" data-correct-answer="Gantt Chart">Submit Jawaban</button>
+                        </div>
+                        <!-- Tambahkan lebih banyak pertanyaan sesuai kebutuhan -->
+                    </div>
+        </section>
+        <!-- Navigasi Paginasi -->
+        <div class="pagination-controls">
+            <button id="prev-btn" class="pagination-btn">⬅️</button>
+            <button id="next-btn" class="pagination-btn">➡️</button>
+        </div>
+
+        <!-- Status Pemain -->
+        <aside class="player-status">
+            <h2>STATUS PEMAIN</h2>
+            <div class="status-item">
+                <span class="status-label">ID Pemain:</span>
+                <span class="status-value" id="player-id">-</span>
+            </div>
+
+            <div id="login-section" style="display: none;">
+                <h1>Login</h1>
+                <form id="login-form">
+                  <input type="email" id="email" placeholder="Email" required />
+                  <input type="password" id="password" placeholder="Password" required />
+                  <button type="submit">Login</button>
+                    <p>Belum punya akun? <a href="#" id="switch-to-signup">Daftar</a></p>
+                  <button id="logout-btn">Logout</button>
+                </form>
+              </div>
+          <div id="signup-section" style="display: none;">
+              <h1>Daftar</h1>
+              <form id="signup-form">
+                <input type="text" id="signup-name" placeholder="Nama Lengkap" required />
+                <input type="email" id="signup-email" placeholder="Email" required />
+                <input type="password" id="signup-password" placeholder="Password" required />
+                <button type="submit">Daftar</button>
+              </form>
+              <p>Sudah punya akun? <a href="#" id="switch-to-login">Login</a></p>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Nama Pemain:</span>
+                <span class="status-value" id="player-name">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Level:</span>
+                <span class="status-value" id="player-level">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">XP:</span>
+                <span class="status-value" id="player-xp">0/1000</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">DIPAYANG Tokens:</span>
+                <span class="status-value" id="player-tokens">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Nyawa:</span>
+                <span class="status-value" id="player-lives">❤️❤️❤️</span>
+            </div>
+            
+            <!-- Badges -->
+            <div class="badges">
+                <h3>Badges</h3>
+                <div id="badges-list">
+                    <!-- Badges akan ditambahkan dinamis -->
+                </div>
+            </div>
+
+            <!-- Sertifikat -->
+            <div class="certificates">
+                <h3>Sertifikat</h3>
+                <div id="certificates-list">
+                    <!-- Sertifikat akan ditambahkan dinamis -->
+                </div>
+            </div>
+
+            <!-- History Permainan -->
+            <div class="game-history">
+                <h3>History Permainan</h3>
+                <div class="history-timeline" id="game-history">
+                    <!-- History akan ditambahkan dinamis -->
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 QUEST.ID Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
+    </footer>
+
+    <!-- Skrip JavaScript -->
+    <script type="module" src="../js/scripts.js"></script>
+
+</body>
+</html>

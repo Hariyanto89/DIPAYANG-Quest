@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'card game-card';
       card.innerHTML = `
-        <img src="${task.img}" alt="Badges">
+        <img src="${task.img}" alt="${task.title}">
         <h3>${task.title}</h3>
         <a href="${task.link}" class="read-btn">Pelajari</a>
       `;

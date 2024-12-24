@@ -57,7 +57,6 @@ main {
 
 /* Card Grid Styles */
 .card-container {
-    flex: 2;
     grid-template-columns: repeat(2, 1fr);
     background-color: #f0f0f0;
     border: 1px solid #ddd;

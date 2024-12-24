@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QUEST ID">
+    <meta property="og:title" content="Quest.ID">
+    <meta property="og:description" content="Platform pembelajaran interaktif berbasis game.">
+    <meta property="og:image" content="assets/icon/QUEST.ID.png">
+    <meta property="og:url" content="https://quest.id">
+    <meta name="twitter:card" content="summary_large_image">
+
     <title>Quest</title>
 
     <!-- Firebase SDK -->
@@ -19,14 +25,16 @@
 <body>
     <header>
         <h1>QUEST.ID</h1>
-        <nav class="menu-card">
-            <a href="#" class="menu-item" aria-label="Beranda">🏡</a>
-            <a href="#" class="menu-item" aria-label="Leaderboard">📊</a>
-            <a href="#" class="menu-item" aria-label="Profil">📲</a>
-            <a href="#" class="menu-item" aria-label="Toko">💰</a>
-            <a href="#" class="menu-item" aria-label="Berita">📰</a>
-            <a href="#" class="menu-item" aria-label="Komunitas">🌏</a>
-        </nav>
+            <nav class="menu-card">
+                <ul>
+                    <li><a href="#" class="menu-item" aria-label="Beranda">🏡</a></li>
+                    <li><a href="pages/leaderboard.html" class="menu-item" aria-label="Leaderboard">📊</a></li>
+                    <li><a href="pages/profil.html" class="menu-item" aria-label="Profil">📲</a></li>
+                    <li><a href="pages/toko.html" class="menu-item" aria-label="Toko">💰</a></li>
+                    <li><a href="pages/berita.html" class="menu-item" aria-label="Berita">📰</a></li>
+                    <li><a href="pages/komunitas.html" class="menu-item" aria-label="Komunitas">🌏</a></li>
+                </ul>
+            </nav>
     </header>
 
     <main>
@@ -119,9 +127,12 @@
         </aside>
     </main>
 
-    <footer>
-        <p>&copy; 2024 QUEST.ID Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang - All rights reserved.</p>
-    </footer>
+        <footer>
+            <address>
+                Dibuat oleh Hariyanto - WA +62 856-0932-6414 - Kabupaten Kepahiang
+            </address>
+            <p>&copy; 2024 QUEST.ID All rights reserved.</p>
+        </footer>
 
     <!-- Skrip JavaScript -->
     <script type="module" src="js/scripts.js"></script>

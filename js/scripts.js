@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextBtn = document.getElementById('next-btn'); // Tombol halaman berikutnya
   const cardsPerPage = 8; // Jumlah kartu per halaman
   let currentPage = 0; // Halaman saat ini dimulai dari 0
-  
+
   // Inisialisasi data tugas statis
   const staticTasks = [
     { img: "assets/icon/projectmanagement.png", title: "Project Management", link: "https://hariyanto89.github.io/Quest.ID/tasks/project-management-task1.html" },
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="${task.link}" class="read-btn">Pelajari</a>
       `;
       container.appendChild(card);
-        console.log(card.outerHTML);
+      console.log(card.outerHTML); // Debugging
     });
 
     // Perbarui status tombol pagination

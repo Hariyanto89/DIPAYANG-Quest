@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="${task.link}" class="read-btn">Pelajari</a>
       `;
       container.appendChild(card);
+        console.log(card.outerHTML);
     });
 
     // Perbarui status tombol pagination
